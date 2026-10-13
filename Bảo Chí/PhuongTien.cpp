@@ -12,10 +12,84 @@ protected:
     string bienSo;                      // Biển số của phương tiện
     string hangSanXuat;                 // Tên hàng sản xuất
     int namSanXuat;                     // Năm sản xuất
-    vector<string> lichSuBaoDuong;      // Danh sách lịch sử bảo dưỡng
     double giaGoc;                      // Giá gốc của phương tiện
     int thangHetHanBaoHiem;             // Tháng hết hạn bảo hiểm
     int namHetHanBaoHiem;               // Năm hết hạn bảo hiểm
 public:
+    // Hàm khởi tạo mặc định
+    PhuongTien() {
+        bienSo="";
+        hangSanXuat="";
+        namSanXuat=1900;
+        giaGoc=0;
+        thangHetHanBaoHiem=1;
+        namHetHanBaoHiem=2025;
+    }
+    // Hàm khởi tạo có tham số
+    PhuongTien(string bs, string hsx, int nsx, double gia, int thanghh, int namhh) {
+        bienSo=bs;
+        hangSanXuat=hsx;
+        namSanXuat=nsx;
+        giaGoc=gia;
+        thangHetHanBaoHiem=thanghh;
+        namHetHanBaoHiem=namhh;
+    }
+    // Hàm khởi tạo sao chép
+    PhuongTien(const PhuongTien& p) {
+        bienSo=p.bienSo;
+        hangSanXuat=p.hangSanXuat;
+        namSanXuat=p.namSanXuat;
+        giaGoc=p.giaGoc;
+        thangHetHanBaoHiem=p.thangHetHanBaoHiem;
+        namHetHanBaoHiem=p.namHetHanBaoHiem;
+    }
+    // Hàm hủy
+    virtual ~PhuongTien() {}
+    // Hàm get
+    string getBienSo() { return bienSo; }
+    string getHangSanXuat() { return hangSanXuat; }
+    int getNamSanXuat() { return namSanXuat; }
+    double getGiaGoc() { return giaGoc; }
+    int getThangHetHanBaoHiem() { return thangHetHanBaoHiem; }
+    int getNamHetHanBaoHiem() { return namHetHanBaoHiem; }
+    // Hàm set
+    void setBienSo(string bs) { bienSo=bs; }
+    void setHangSanXuat(string hsx) { hangSanXuat=hsx; }
+    void setNamSanXuat(int nsx) { namSanXuat=nsx; }
+    void setGiaGoc(double gia) { giaGoc=gia; }
+    void setThangHetHanBaoHiem(int thanghh) { thangHetHanBaoHiem=thanghh; }
+    void setNamHetHanBaoHiem(int namhh) { namHetHanBaoHiem=namhh; }
+    // Phương thức thuần ảo
+    virtual string GetLoaiPhuongTien() const=0;     // Trả về loại phương tiện, ví dụ: Xe máy, Ô tô... 
+    virtual string GetThongSo() const=0;            // Trả về thông số riêng của phương tiện, ví dụ: Số chỗ ngồi, dung tích xi lanh...
+    virtual double TinhPhiBaoTri() const=0;         // Tính phí bảo trì của phương tiện
+    // Kiểm tra niên hạn
+    void KiemTraNienHan(int namHienTai=2024) const {
+        if (namHienTai-namSanXuat>20) {
+            inHieuUng("  [CẢNH BÁO] Xe đã quá 20 năm sử dụng, hết niên hạn!\n", C_LOI);
+        }
+    }
+    // Lấy mã vùng
+    string LayMaVung() const {
+        if (bienSo.length()>=2) { 
+            return bienSo.substr(0, 2);             // Lấy 2 kí tự bắt đầu từ vị trí 0
+        }
+        return "Unknown";                           // Nếu biển số có ít hơn 2 kí tự
+    }
+    // Tính giá trị hiện tại
+    double TinhGiaTriHienTai(int namHienTai=2024) const {
+        int soNam=namHienTai-namSanXuat;
+        if (soNam<0) { soNam=0; }
+        return giaGoc*pow(0.9, soNam);
+    }
+    // Kiểm tra bảo hiểm đã hết hạn hay chưa?
+    void KiemTraBaoHiem(int thangHienTai, int namHienTai) const {
+        if (namHienTai>namHetHanBaoHiem || (namHienTai==namHetHanBaoHiem && thangHienTai>thangHetHanBaoHiem)) {
+            inHieuUng("  [CẢNH BÁO] Xe đã hết hạn bảo hiểm dân sự! Mức phạt dự kiến: 400.000 - 600.000 VND.\n", C_LOI);
+        }
+    }
+    // Nhập thông tin
+    
+    // Hiển thị thông tin
     
 };
