@@ -64,7 +64,7 @@ public:
     virtual string GetThongSo() const=0;            // Trả về thông số riêng của phương tiện, ví dụ: Số chỗ ngồi, dung tích xi lanh...
     virtual double TinhPhiBaoTri() const=0;         // Tính phí bảo trì của phương tiện
     // Kiểm tra niên hạn
-    void KiemTraNienHan(int namHienTai=2024) const {
+    void KiemTraNienHan(int namHienTai=2026) const {
         if (namHienTai-namSanXuat>20) {
             inHieuUng("  [CẢNH BÁO] Xe đã quá 20 năm sử dụng, hết niên hạn!\n", C_LOI);
         }
@@ -77,7 +77,7 @@ public:
         return "Unknown";                           // Nếu biển số có ít hơn 2 kí tự
     }
     // Tính giá trị hiện tại
-    double TinhGiaTriHienTai(int namHienTai=2024) const {
+    double TinhGiaTriHienTai(int namHienTai=2026) const {
         int soNam=namHienTai-namSanXuat;
         if (soNam<0) { soNam=0; }
         return giaGoc*pow(0.9, soNam);
