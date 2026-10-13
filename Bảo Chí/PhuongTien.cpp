@@ -112,5 +112,25 @@ public:
         in.ignore(32767, '\n');
     }
     // Hiển thị thông tin
-    
+    virtual void HienThiThongTin(ostream& out) const {
+        out<<left
+           <<setw(W_BIENSO)<<bienSo                                 // In biển số theo độ rộng W_BIENSO
+           <<setw(W_HANG)<<hangSanXuat                              // In hãng sản suất
+           <<setw(W_NAMSX)<<namSanXuat                              // In năm sản xuất
+           <<setw(W_LOAI)<<GetLoaiPhuongTien()                      // Gọi hàm ảo để lấy loại phương tiện
+           <<setw(W_THONGSO)<<GetThongSo();                         // Gọi hàm ảo để lấy thông số riêng
+        stringstream ssPhi;                                         // Tạo lượng chuỗi để định dạng phí bảo trì
+        ssPhi<<fixed<<setprecision(0)<<TinhPhiBaoTri()<<" VND";     
+        out<<right<<setw(W_PHI)<<ssPhi.str();                       // Căn lề phải và in phí bảo trì theo độ rộng cột
+    }
+    // Toán tử nhập
+    friend istream& operator >> (istream& in, PhuongTien& pt) {
+        pt.Nhap(in);
+        return in;
+    }
+    // Toán tử xuất
+    friend ostream& operator << (ostream& out, const PhuongTien& pt) {
+        pt.HienThiThongTin(out);
+        return out;
+    }
 };
