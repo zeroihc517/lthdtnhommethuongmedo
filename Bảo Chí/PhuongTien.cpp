@@ -89,7 +89,28 @@ public:
         }
     }
     // Nhập thông tin
-    
+    virtual void Nhap(istream& in) {
+        setColor(C_VIEN);                                               // Đổi màu chữ sang màu viền
+        cout<<"  "<<char(204)<<char(205)<<" Nhap Bien so: ";
+        setColor(C_TEXT);                                               // Đổi sang màu nội dung
+        getline(in, bienSo);
+        setColor(C_VIEN);
+        cout<<"  "<<char(204)<<char(205)<<" Nhap Hang san xuat: ";
+        setColor(C_TEXT);
+        getline(in, hangSanXuat);
+        setColor(C_VIEN);
+        cout<<"  "<<char(204)<<char(205)<<" Nhap Nam san xuat: ";
+        setColor(C_TEXT);
+        in>>namSanXuat;
+        if (in.fail()) { in.clear(); }                                  // Nếu lượng nhập bị lỗi thì xóa có lỗi
+        in.ignore(32767, '\n');
+        setColor(C_VIEN);
+        cout<<"  "<<char(204)<<char(205)<<" Nhap Gia goc (VND): ";
+        setColor(C_TEXT);
+        in>>giaGoc;
+        if (in.fail()) { in.clear(); }                                  // Xử lý có lỗi (nếu có)
+        in.ignore(32767, '\n');
+    }
     // Hiển thị thông tin
     
 };
