@@ -54,7 +54,7 @@ public:
         if(congSuat<=125) return "Bang A1";
         return "Bang A";
     }
-    // Hàm kiểm tra xe có nên thay nhớt không
+    (// Hàm kiểm tra xe có nên thay nhớt không
     void KiemTraThayNhot() const{
         double kmDaDiLanTruoc=soKmDaDi-soKmThayNhotGanNhat;
         string htd=toLower(heTruyenDong);
@@ -65,7 +65,7 @@ public:
         }else {
             cout<<"Nhot con tot"<<endl;
         }
-    }
+    })// chua xong
     // Hàm so sánh chi phí giữ xe giữa vé ngày và vé tháng
     void TienGuiXe(int soNgay) const{
         if(soNgay<=0) return;
