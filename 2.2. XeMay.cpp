@@ -54,8 +54,67 @@ public:
         if(congSuat<=175) return "Bang A1";
         return "Bang A2";
     }
-    //
-    void 
-
-
+    // Hàm kiểm tra xe có nên thay nhớt chưa
+    void KiemTraThayNhot() const{
+        if(soKmDaDi>=1500){
+            cout<<"Nen thay nhot"<<endl;
+        }else{
+            cout<<"Nhot con tot"<<endl;
+        }
+        if((heTruyenDong=="Xe ga"||heTruyenDong=="Xe ga")&& soKmDaDi>=4500){
+            cout<<"Can phai thay nhot"<<endl;
+        }
+    }
+    // Hàm so sánh chi phí giữ xe giữa vé ngày và vé tháng
+    void TienGuiXe(int soNgay) const{
+        if(soNgay<0) return;
+        double veNgay=soNgay*5000;
+        double veThang=120000;
+        if(veNgay>veThang){
+            cout<<"Ban nen mua ve thang"<<endl;
+        }else{
+            cout<<"Ban nen mua ve ngay"<<endl;
+        }
+    }
+    // Hàm nhập thông tin xe máy
+    void Nhap(istream& in){
+        // Gọi hàm nhập của lớp PhuongTien
+        PhuongTien::Nhap(in);
+        // Nhập công suất
+        setColor(C_VIEN);
+        cout<<" "<<char(204)<<char(205)<<"Nhap Cong suat: ";
+        setColor(C_TEXT);
+        in>>congSuat;
+        if(in.fail()){
+            in.clear();
+        }
+        in.ignore(32767,'\n');
+        // Nhập hệ truyền động
+        setColor(C_VIEN);
+        cout<<" "<<char(204)<<char(205)<<"Nhap He truyen dong: ";
+        setColor(C_TEXT);
+        getline(in,heTruyenDong);
+        // Nhập số km đã đi
+        setColor(C_VIEN);
+        cout<<" "<<char(204)<<char(205)<<"Nhap So km da di: ";
+        setColor(C_TEXT);
+        in>>soKmDaDi;
+        if(in.fail()){
+            in.clear();
+        }
+        in.ignore(32767,'\n');
+        // Hàm hiển thị thông tin
+        void HienThiThongTin(ostream& out) const{
+            PhuongTien::HenThiThongTin(out);
+        }
+        // Quá tải nhập
+        friend istream& operator>>(istream& in, XeMay &p){
+            p.Nhap(in);
+            return in;
+        }
+        // Quá tải xuất
+        friend ostream& operator<<(ostream& out, XeMay p){
+            p.HienThiThongTin(out);
+            return out;
+        }
 };   
