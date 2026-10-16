@@ -63,41 +63,30 @@ public:
     double TinhPhiBaoTri() const override {
         return 1000000 + taiTrong * 200000;
     }
-   // hàm chi phí lăn bánh ( như là tiền xăng, tiền bảo dưỡng, tiền hư hao xe cũ, tiền trục trặc máy móc, ...  )
+   // hàm chi phí lăn bánh (như là tiền xăng, tiền bảo dưỡng, tiền hư hao xe cũ, tiền trục trặc máy móc,... )
      double TinhChiPhiLanBanh(double quangDuong, int namHienTai) const {
-    // Quang duong khong hop le
-    if (quangDuong < 0)
-    {
-        return 0;
-    }
-    if (getNamSanXuat() > namHienTai)
-    {
+    // Quãng đường không hợp lệ
+    if (quangDuong < 0) { return 0; }
+    if (getNamSanXuat() > namHienTai) {
         cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
     }
     // Chi phi co ban: 5000 VND/km
     double chiPhiMoiKm = 5000;
     // Tải trọng càng lớn -> chi phí vận hành càng cao
-    if (taiTrong > 5)
-    {
+    if (taiTrong > 5) {
         chiPhiMoiKm += 3000;
-    }
-    else if (taiTrong > 2)
-    {
+    } else if (taiTrong > 2) {
         chiPhiMoiKm += 1500;
     }
     // Số trục càng nhiều -> chi phí vận hành càng cao
-    if (soTrucBanhXe >= 4)
-    {
+    if (soTrucBanhXe >= 4) {
         chiPhiMoiKm += 2000;
-    }
-    else if (soTrucBanhXe == 3)
-    {
+    } else if (soTrucBanhXe == 3) {
         chiPhiMoiKm += 1000;
     }
     // Xe sử dụng trên 10 năm -> chi phí vận hành tăng
     int tuoiXe = namHienTai - getNamSanXuat();
-    if (tuoiXe > 10)
-    {
+    if (tuoiXe > 10) {
         chiPhiMoiKm += 1000;
     }
     // Tổng chi phí lăn bánh
@@ -111,21 +100,17 @@ public:
         // Tính phí dựa trên tải trọng
         if (taiTrong <= 2) {
             phiVanChuyen = quangDuong * 5000; // tải trọng <= 2 thì tiền = quãng đường * 5000đ
-        }
-        else if (taiTrong <= 5) {
+        } else if (taiTrong <= 5) {
             phiVanChuyen = quangDuong * 8000; // tải trọng <= 5 thì tiền = quãng đường * 8000đ
-        }
-        else {
+        } else {
             phiVanChuyen = quangDuong * 12000; // tải trọng > 5 thì tiền = quãng đường * 12000đ
         }
         // Thùng đông lạnh tốn chi phí cao hơn ( vi xe đông lạnh cần máy móc hơn để bảo quản đồ đông lạnh ) 
-       string loai = toLower(loaiThungXe);
-
-    if (loai == "dong lanh")
-    {
-       phiVanChuyen += quangDuong * 3000;
-    }
-        return chiPhiLanBanh + phiVanChuyen;// ta có hàm cước vận chuyển 
+        string loai = toLower(loaiThungXe);
+        if (loai == "dong lanh") {
+           phiVanChuyen += quangDuong * 3000;
+        }
+        return chiPhiLanBanh + phiVanChuyen;    // ta có hàm cước vận chuyển 
     }
     // ĐÁNH GIẢ KHẢ NĂNG VẬN CHUYỂN DỰA TRÊN TẢI TRỌNG , ĐỂ KHÁCH HÀNG CHỌN
     string DanhGiaKhaNangVanChuyen() const { // đánh giá xem vận chuyển hàng nặng hay nhẹ
@@ -138,66 +123,48 @@ public:
         return "Van chuyen hang nang";
     }
      // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
-   string PhanLoaiThungXe() const
-{
-    string loai =  toLower(loaiThungXe);
-    if (loai == "dong lanh")
-    {
-        return "Thung dong lanh";
+    string PhanLoaiThungXe() const {
+        string loai =  toLower(loaiThungXe);
+        if (loai == "dong lanh") {
+            return "Thung dong lanh";
+        }
+        if (loai == "thung kin") {
+            return "Thung kin";
+        }
+        if (loai == "thung bat") {
+            return "Thung bat";
+        }
+        if (loai == "xe ben") {
+            return "Xe ben";
+        }
+        return "Khong xac dinh";
     }
-    if (loai == "thung kin")
-    {
-        return "Thung kin";
-    }
-    if (loai == "thung bat")
-    {
-        return "Thung bat";
-    }
-    if (loai == "xe ben")
-    {
-        return "Xe ben";
-    }
-    return "Khong xac dinh";
-}
     // HÀM KIỂM TRA XE CÓ ĐẢM BẢO CHẤT LƯỢNG/LỢI NHUẬN HAY KO , DỰA TRÊN TUỔI XE,CHI PHÍ LĂN BÁNH, 
     // NẾU XE QUÁ CŨ , TỐN NHIỀU TIỀN MÀ LỜI THẤP THÌ KO ĐỦ TIÊU CHUẨN
- bool KiemTraXeCoNenThayThe(int namHienTai) const
-{
-    if (getNamSanXuat() > namHienTai)
-    {
+ bool KiemTraXeCoNenThayThe(int namHienTai) const {
+    if (getNamSanXuat() > namHienTai) {
         cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
         return false;
     }
     int tuoiXe = namHienTai - getNamSanXuat();
     double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
     double chiPhiLanBanh = TinhChiPhiLanBanh(100, namHienTai);
-    if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000)
-    {
+    if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000) {
         return true;
     }
-
     return false;
 }
 // HÀM KIỂM TRA CÓ ĐƯỢC VÀO PHỐ KO , XE < 1,5 tấn auto được vào , xe lớn mà chạy trong khung 6h - 9h&& 16h-20h thì gây ùn tắc giao thông rất nặng
-    bool DuocPhepVaoPho(int gioHienTai) const
-{
-    if (gioHienTai < 0 || gioHienTai > 23)
-    {
-        cout << "[LOI] Gio hien tai phai tu 0 den 23!\n";
-        return false;
-    }
-
-    if (taiTrong <= 1.5)
+    bool DuocPhepVaoPho(int gioHienTai) const {
+        if (gioHienTai < 0 || gioHienTai > 23) {
+            cout << "[LOI] Gio hien tai phai tu 0 den 23!\n";
+            return false;
+        }
+        if (taiTrong <= 1.5) { return true; }
+        if (gioHienTai >= 6 && gioHienTai < 9) { return false; }
+        if (gioHienTai >= 16 && gioHienTai < 20) { return false; }
         return true;
-
-    if (gioHienTai >= 6 && gioHienTai < 9)
-        return false;
-
-    if (gioHienTai >= 16 && gioHienTai < 20)
-        return false;
-
-    return true;
-}
+    }
     // Hàm nhập
     void Nhap(istream& in) {
         // Goi ham Nhap cua lop cha
