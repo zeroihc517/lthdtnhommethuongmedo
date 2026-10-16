@@ -51,18 +51,19 @@ public:
     // Loại bằng lái phù hợp dựa trên công suất
     string YeuCauBangLai() const{
         if(congSuat<=50) return "Khong can bang lai";
-        if(congSuat<=175) return "Bang A1";
-        return "Bang A2";
+        if(congSuat<=125) return "Bang A1";
+        return "Bang A";
     }
     // Hàm kiểm tra xe có nên thay nhớt không
     void KiemTraThayNhot() const{
-        if(soKmDaDi>=1500){
-            cout<<"Nen thay nhot"<<endl;
-        }else{
+        double kmDaDiLanTruoc=soKmDaDi-soKmThayNhotGanNhat;
+        string htd=toLower(heTruyenDong);
+        if(kmDaDiLanTruoc>=1500){
+            if(htd=="xe ga"&&kmDaDiLanTruoc>=4500){
+                cout<<"Nen thay nhot"<<endl;
+            }
+        }else {
             cout<<"Nhot con tot"<<endl;
-        }
-        if(heTruyenDong=="Xe ga"&& soKmDaDi>=4500){
-            cout<<"Can phai thay nhot"<<endl;
         }
     }
     // Hàm so sánh chi phí giữ xe giữa vé ngày và vé tháng
@@ -72,7 +73,7 @@ public:
         double veThang=120000;
         if(veNgay>veThang){
             cout<<"Ban nen mua ve thang"<<endl;
-        }else if{
+        }else if(veNgay<veThang){
             cout<<"Ban nen mua ve ngay"<<endl;
         }else{
             cout<<"Hai phuong an co chi phi bang nhau"<<endl;
