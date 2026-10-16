@@ -12,20 +12,20 @@ public:
     }
     // Hàm khởi tạo có tham số
     XeMay(string bs,string hsx, int nsx, double gia, int thanghh, int namhh, double cs, string htd, double skm):PhuongTien(bs, hsx, nsx, gia, thanghh, namhh){
-        congSuat=cs;
+        congSuat=(cs>0)?cs:0;
         heTruyenDong=htd;
-        sKmDaDi=skm;
+        soKmDaDi=(skm>0)?skm:0;
     }
     // Hàm khởi tạo sao chép
     XeMay(const XeMay &p):PhuongTien(p){
         congSuat=p.congSuat;
-        hetuyenDong=p.heTruyenDong;
+        heTruyenDong=p.heTruyenDong;
         soKmDaDi=p.soKmDaDi;
     }
     // Hàm hủy
     ~XeMay() override{}
     // Getter
-    double getCongSuat() const{return congSuat;}
+    double getCongSuat() const {return congSuat;}
     string getHeTruyenDong() const {return heTruyenDong;}
     double getSoKmDaDi() const {return soKmDaDi;}
     // Setter
@@ -54,14 +54,14 @@ public:
         if(congSuat<=175) return "Bang A1";
         return "Bang A2";
     }
-    // Hàm kiểm tra xe có nên thay nhớt chưa
+    // Hàm kiểm tra xe có nên thay nhớt không
     void KiemTraThayNhot() const{
         if(soKmDaDi>=1500){
             cout<<"Nen thay nhot"<<endl;
         }else{
             cout<<"Nhot con tot"<<endl;
         }
-        if((heTruyenDong=="Xe ga"||heTruyenDong=="Xe ga")&& soKmDaDi>=4500){
+        if(heTruyenDong=="Xe ga"&& soKmDaDi>=4500){
             cout<<"Can phai thay nhot"<<endl;
         }
     }
@@ -77,7 +77,7 @@ public:
         }
     }
     // Hàm nhập thông tin xe máy
-    void Nhap(istream& in){
+    void Nhap(istream& in) override {
         // Gọi hàm nhập của lớp PhuongTien
         PhuongTien::Nhap(in);
         // Nhập công suất
@@ -85,8 +85,9 @@ public:
         cout<<" "<<char(204)<<char(205)<<"Nhap Cong suat: ";
         setColor(C_TEXT);
         in>>congSuat;
-        if(in.fail()){
+        if(in.fail()||congSuat<0){
             in.clear();
+            congSuat=0;
         }
         in.ignore(32767,'\n');
         // Nhập hệ truyền động
@@ -99,22 +100,24 @@ public:
         cout<<" "<<char(204)<<char(205)<<"Nhap So km da di: ";
         setColor(C_TEXT);
         in>>soKmDaDi;
-        if(in.fail()){
+        if(in.fail()||soKmDaDi<0){
             in.clear();
+            soKmDaDi=0;
         }
         in.ignore(32767,'\n');
-        // Hàm hiển thị thông tin
-        void HienThiThongTin(ostream& out) const{
-            PhuongTien::HenThiThongTin(out);
-        }
-        // Quá tải nhập
-        friend istream& operator>>(istream& in, XeMay &p){
-            p.Nhap(in);
-            return in;
-        }
-        // Quá tải xuất
-        friend ostream& operator<<(ostream& out, XeMay p){
-            p.HienThiThongTin(out);
-            return out;
-        }
+    }
+    // Hàm hiển thị thông tin
+    void HienThiThongTin(ostream& out) const override{
+        PhuongTien::HienThiThongTin(out);
+    }
+    // Quá tải nhập
+    friend istream& operator>>(istream& in, XeMay &p){
+        p.Nhap(in);
+        return in;
+    }
+    // Quá tải xuất
+    friend ostream& operator<<(ostream& out, const XeMay &p){
+        p.HienThiThongTin(out);
+        return out;
+    }
 };   
