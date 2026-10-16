@@ -46,12 +46,12 @@ public:
     // Hàm hủy
     virtual ~PhuongTien() {}
     // Hàm get
-    string getBienSo() { return bienSo; }
-    string getHangSanXuat() { return hangSanXuat; }
-    int getNamSanXuat() { return namSanXuat; }
-    double getGiaGoc() { return giaGoc; }
-    int getThangHetHanBaoHiem() { return thangHetHanBaoHiem; }
-    int getNamHetHanBaoHiem() { return namHetHanBaoHiem; }
+    string getBienSo() const { return bienSo; }
+    string getHangSanXuat() const { return hangSanXuat; }
+    int getNamSanXuat() const { return namSanXuat; }
+    double getGiaGoc() const { return giaGoc; }
+    int getThangHetHanBaoHiem() const { return thangHetHanBaoHiem; }
+    int getNamHetHanBaoHiem() const { return namHetHanBaoHiem; }
     // Hàm set
     void setBienSo(string bs) { bienSo=bs; }
     void setHangSanXuat(string hsx) { hangSanXuat=hsx; }
