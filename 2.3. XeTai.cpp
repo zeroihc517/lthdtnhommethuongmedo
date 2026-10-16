@@ -64,29 +64,45 @@ public:
         return 1000000 + taiTrong * 200000;
     }
    // hàm chi phí lăn bánh ( như là tiền xăng, tiền bảo dưỡng, tiền hư hao xe cũ, tiền trục trặc máy móc, ...  )
-    double TinhChiPhiLanBanh(double quangDuong) const {
-        if (quangDuong < 0) { return 0; }
-        double chiPhiMoiKm = 5000; // mặc định chi phí lăn bánh = 5000d/1km . ( giống như đi 1km là tốn 5000đ tiền xăng )
-        if (taiTrong > 5) { // nếu tải trọng càng lớn thì chi phí càng cao ( vì xe càng lớn, càng nặng , thì năng lượng cần tiêu thụ sẽ phát sinh lớn hơn, cần công suất lớn hơn , tốn tiền xăng hơn )
-            chiPhiMoiKm += 3000;  // nếu tải trọng lớn hơn 5 thì + thêm 3000d vào chiphi/1km
-        }
-        else if (taiTrong > 2) {  // nếu tải trọng lớn hơn 2 thì + thêm 1500d vào chiphi/1km
-            chiPhiMoiKm += 1500;
-        }
-        // Xe nhiều trục -> chi phí vận hành cao hơn (xe càng kéo theo nhiều trục , xe tải cần nhiều năng lượng hơn để tăng sức kéo , cộng thêm năng lượng hao phí thì chi phí lăn bánh sẽ tăng) 
-        if (soTrucBanhXe >= 4) {  // nếu xe tải có nhiều hơn 4 trục thì + thêm 2000d vào chiphi/1km
-            chiPhiMoiKm += 2000;
-        }
-        else if (soTrucBanhXe == 3) { // nếu xe tải có 3 trục thì + thêm 1000d vào chiphi/1km
-            chiPhiMoiKm += 1000;
-        }
-        // Xe quá cũ -> chi phí vận hành tăng (xe đời cũ , máy móc đời cũ sẽ dễ dàng hư hơn , tốn nhiều nhiên liệu hơn để chạy)
-        int tuoiXe = 2026 - getNamSanXuat(); // tuổi xe = 2026 - năm sản xuất 
-        if (tuoiXe > 10) {
-            chiPhiMoiKm += 1000; // xe sài hơn 10 năm rồi thì máy cũ nên vận hành tốn tiền hơn nên +1000d/1km;
-        }
-        return quangDuong * chiPhiMoiKm; // tổng giá tiền phải tốn cũng mỗi chuyến đi
+     double TinhChiPhiLanBanh(double quangDuong, int namHienTai) const {
+    // Quang duong khong hop le
+    if (quangDuong < 0)
+    {
+        return 0;
     }
+    // Chi phi co ban: 5000 VND/km
+    double chiPhiMoiKm = 5000;
+    // Tải trọng càng lớn -> chi phí vận hành càng cao
+    if (taiTrong > 5)
+    {
+        chiPhiMoiKm += 3000;
+    }
+    else if (taiTrong > 2)
+    {
+        chiPhiMoiKm += 1500;
+    }
+    // Số trục càng nhiều -> chi phí vận hành càng cao
+    if (soTrucBanhXe >= 4)
+    {
+        chiPhiMoiKm += 2000;
+    }
+    else if (soTrucBanhXe == 3)
+    {
+        chiPhiMoiKm += 1000;
+    }
+    // Xe sử dụng trên 10 năm -> chi phí vận hành tăng
+    if (getNamSanXuat() > namHienTai)
+    {
+        return 0;
+    }
+    int tuoiXe = namHienTai - getNamSanXuat();
+    if (tuoiXe > 10)
+    {
+        chiPhiMoiKm += 1000;
+    }
+    // Tổng chi phí lăn bánh
+    return quangDuong * chiPhiMoiKm;
+}
     // Hàm tính cước vận chuyển (đây là tiền mà khách phải trả khi muốn đặt xe)  = hàm chi phí lăn bánh + hàm phí vận chuyển 
     double TinhCuocVanChuyen(double quangDuong) const {     // Giá tiền 1 cuốc xe tai khách phải trả 
         if (quangDuong < 0) { return 0; }
