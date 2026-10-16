@@ -70,6 +70,10 @@ public:
     {
         return 0;
     }
+    if (getNamSanXuat() > namHienTai)
+    {
+        cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+    }
     // Chi phi co ban: 5000 VND/km
     double chiPhiMoiKm = 5000;
     // Tải trọng càng lớn -> chi phí vận hành càng cao
@@ -91,10 +95,6 @@ public:
         chiPhiMoiKm += 1000;
     }
     // Xe sử dụng trên 10 năm -> chi phí vận hành tăng
-    if (getNamSanXuat() > namHienTai)
-    {
-        return 0;
-    }
     int tuoiXe = namHienTai - getNamSanXuat();
     if (tuoiXe > 10)
     {
@@ -104,10 +104,9 @@ public:
     return quangDuong * chiPhiMoiKm;
 }
     // Hàm tính cước vận chuyển (đây là tiền mà khách phải trả khi muốn đặt xe)  = hàm chi phí lăn bánh + hàm phí vận chuyển 
-    double TinhCuocVanChuyen(double quangDuong) const {     // Giá tiền 1 cuốc xe tai khách phải trả 
-        if (quangDuong < 0) { return 0; }
-        // Tạo hàm chi phí lăn bánh trước 
-        double chiPhiLanBanh = TinhChiPhiLanBanh(quangDuong);
+   double TinhCuocVanChuyen(double quangDuong, int namHienTai) const {
+        if (quangDuong < 0) return 0;
+        double chiPhiLanBanh = TinhChiPhiLanBanh(quangDuong, namHienTai);
         double phiVanChuyen = 0; // mặc định hàm phí vận chuyển = 0 trước
         // Tính phí dựa trên tải trọng
         if (taiTrong <= 2) {
@@ -120,9 +119,12 @@ public:
             phiVanChuyen = quangDuong * 12000; // tải trọng > 5 thì tiền = quãng đường * 12000đ
         }
         // Thùng đông lạnh tốn chi phí cao hơn ( vi xe đông lạnh cần máy móc hơn để bảo quản đồ đông lạnh ) 
-        if (loaiThungXe == "Dong lanh" || loaiThungXe == "dong lanh") {
-            phiVanChuyen += quangDuong * 3000;    // tiền = quãng đường * 3000đ nữa
-        }
+       string loai = toLower(loaiThungXe);
+
+    if (loai == "dong lanh")
+    {
+       phiVanChuyen += quangDuong * 3000;
+    }
         return chiPhiLanBanh + phiVanChuyen;// ta có hàm cước vận chuyển 
     }
     // ĐÁNH GIẢ KHẢ NĂNG VẬN CHUYỂN DỰA TRÊN TẢI TRỌNG , ĐỂ KHÁCH HÀNG CHỌN
@@ -135,29 +137,10 @@ public:
         }
         return "Van chuyen hang nang";
     }
-    string ChuanHoaChuoi(string s)
-{
-    // Xóa khoảng trắng đầu
-    while (!s.empty() && s[0] == ' ')
-        s.erase(0, 1);
-
-    // Xóa khoảng trắng cuối
-    while (!s.empty() && s[s.length() - 1] == ' ')
-        s.erase(s.length() - 1, 1);
-
-    // Chuyển chữ in hoa thành chữ thường
-    for (int i = 0; i < s.length(); i++)
-    {
-        if (s[i] >= 'A' && s[i] <= 'Z')
-            s[i] = s[i] - 'A' + 'a';
-    }
-
-    return s;
-}
      // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
    string PhanLoaiThungXe() const
 {
-    string loai = ChuanHoaChuoi(loaiThungXe);
+    string loai =  toLower(loaiThungXe);
     if (loai == "dong lanh")
     {
         return "Thung dong lanh";
@@ -187,7 +170,7 @@ public:
     }
     int tuoiXe = namHienTai - getNamSanXuat();
     double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
-    double chiPhiLanBanh = TinhChiPhiLanBanh(100);
+    double chiPhiLanBanh = TinhChiPhiLanBanh(100, namHienTai);
     if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000)
     {
         return true;
