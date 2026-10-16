@@ -93,7 +93,7 @@ public:
     return quangDuong * chiPhiMoiKm;
 }
     // Hàm tính cước vận chuyển (đây là tiền mà khách phải trả khi muốn đặt xe)  = hàm chi phí lăn bánh + hàm phí vận chuyển 
-   double TinhCuocVanChuyen(double quangDuong, int namHienTai) const {
+    double TinhCuocVanChuyen(double quangDuong, int namHienTai) const {
         if (quangDuong < 0) return 0;
         double chiPhiLanBanh = TinhChiPhiLanBanh(quangDuong, namHienTai);
         double phiVanChuyen = 0; // mặc định hàm phí vận chuyển = 0 trước
@@ -125,36 +125,28 @@ public:
      // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
     string PhanLoaiThungXe() const {
         string loai =  toLower(loaiThungXe);
-        if (loai == "dong lanh") {
-            return "Thung dong lanh";
-        }
-        if (loai == "thung kin") {
-            return "Thung kin";
-        }
-        if (loai == "thung bat") {
-            return "Thung bat";
-        }
-        if (loai == "xe ben") {
-            return "Xe ben";
-        }
+        if (loai == "dong lanh") { return "Thung dong lanh"; }
+        if (loai == "thung kin") { return "Thung kin"; }
+        if (loai == "thung bat") { return "Thung bat"; }
+        if (loai == "xe ben") { return "Xe ben"; }
         return "Khong xac dinh";
     }
     // HÀM KIỂM TRA XE CÓ ĐẢM BẢO CHẤT LƯỢNG/LỢI NHUẬN HAY KO , DỰA TRÊN TUỔI XE,CHI PHÍ LĂN BÁNH, 
     // NẾU XE QUÁ CŨ , TỐN NHIỀU TIỀN MÀ LỜI THẤP THÌ KO ĐỦ TIÊU CHUẨN
- bool KiemTraXeCoNenThayThe(int namHienTai) const {
-    if (getNamSanXuat() > namHienTai) {
-        cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+    bool KiemTraXeCoNenThayThe(int namHienTai) const {
+        if (getNamSanXuat() > namHienTai) {
+            cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+            return false;
+        }
+        int tuoiXe = namHienTai - getNamSanXuat();
+        double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
+        double chiPhiLanBanh = TinhChiPhiLanBanh(100, namHienTai);
+        if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000) {
+            return true;
+        }
         return false;
     }
-    int tuoiXe = namHienTai - getNamSanXuat();
-    double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
-    double chiPhiLanBanh = TinhChiPhiLanBanh(100, namHienTai);
-    if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000) {
-        return true;
-    }
-    return false;
-}
-// HÀM KIỂM TRA CÓ ĐƯỢC VÀO PHỐ KO , XE < 1,5 tấn auto được vào , xe lớn mà chạy trong khung 6h - 9h&& 16h-20h thì gây ùn tắc giao thông rất nặng
+    // HÀM KIỂM TRA CÓ ĐƯỢC VÀO PHỐ KO , XE < 1,5 tấn auto được vào , xe lớn mà chạy trong khung 6h - 9h&& 16h-20h thì gây ùn tắc giao thông rất nặng
     bool DuocPhepVaoPho(int gioHienTai) const {
         if (gioHienTai < 0 || gioHienTai > 23) {
             cout << "[LOI] Gio hien tai phai tu 0 den 23!\n";
@@ -194,7 +186,7 @@ public:
         }
         in.ignore(32767, '\n');
     }
- // Hàm hiển thị thông tin
+    // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         // PhuongTien sẽ tự động gọi hàm GetThongSo()
         // của XeTai do GetThongSo() là hàm ảo.
