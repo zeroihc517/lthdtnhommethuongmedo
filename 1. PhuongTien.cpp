@@ -66,7 +66,7 @@ public:
     // Kiểm tra niên hạn
     void KiemTraNienHan(int namHienTai=2026) const {
         if (namHienTai-namSanXuat>20) {
-            inHieuUng("  [CẢNH BÁO] Xe đã quá 20 năm sử dụng, hết niên hạn!\n", C_LOI);
+            inHieuUng("  [CANH BAO] Xe da qua 20 nam su dung, da qua nien han!!\n", C_LOI);
         }
     }
     // Lấy mã vùng
@@ -85,7 +85,7 @@ public:
     // Kiểm tra bảo hiểm đã hết hạn hay chưa?
     void KiemTraBaoHiem(int thangHienTai, int namHienTai) const {
         if (namHienTai>namHetHanBaoHiem || (namHienTai==namHetHanBaoHiem && thangHienTai>thangHetHanBaoHiem)) {
-            inHieuUng("  [CẢNH BÁO] Xe đã hết hạn bảo hiểm dân sự! Mức phạt dự kiến: 400.000 - 600.000 VND.\n", C_LOI);
+            inHieuUng("  [CANH BAO] Xe da het han bao hiem dan su! Muc phat du kien: 400.000 - 600.000 VND.\n", C_LOI);
         }
     }
     // Nhập thông tin
