@@ -119,54 +119,86 @@ public:
         }
         return "Van chuyen hang nang";
     }
-     // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
-    string PhanLoaiThungXe() const { // hàm phân loại thùng xe
-        if (loaiThungXe == "Dong lanh" || loaiThungXe == "dong lanh") {
-            return "Thung dong lanh";   // thùng mà có hệ thống giữ nhiệt đông lạnh
-        }
-        if (loaiThungXe == "Thung kin" || loaiThungXe == "thung kin") {
-            return "Thung kin"; // thùng mà có nóc 
-        }
-        if (loaiThungXe == "Thung bat" || loaiThungXe == "thung bat") {
-            return "Thung bat"; // thùng được che bằng miếng bạt
-        }
-        if (loaiThungXe == "Xe ben" || loaiThungXe == "xe ben") {
-            return "Xe ben"; // xe có thể nâng lên nâng xuống 
-        }
-        return "Khong xac dinh";
+    string ChuanHoaChuoi(string s)
+{
+    // Xóa khoảng trắng đầu
+    while (!s.empty() && s[0] == ' ')
+        s.erase(0, 1);
+
+    // Xóa khoảng trắng cuối
+    while (!s.empty() && s[s.length() - 1] == ' ')
+        s.erase(s.length() - 1, 1);
+
+    // Chuyển chữ in hoa thành chữ thường
+    for (int i = 0; i < s.length(); i++)
+    {
+        if (s[i] >= 'A' && s[i] <= 'Z')
+            s[i] = s[i] - 'A' + 'a';
     }
+
+    return s;
+}
+     // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
+   string PhanLoaiThungXe() const
+{
+    string loai = ChuanHoaChuoi(loaiThungXe);
+    if (loai == "dong lanh")
+    {
+        return "Thung dong lanh";
+    }
+    if (loai == "thung kin")
+    {
+        return "Thung kin";
+    }
+    if (loai == "thung bat")
+    {
+        return "Thung bat";
+    }
+    if (loai == "xe ben")
+    {
+        return "Xe ben";
+    }
+    return "Khong xac dinh";
+}
     // HÀM KIỂM TRA XE CÓ ĐẢM BẢO CHẤT LƯỢNG/LỢI NHUẬN HAY KO , DỰA TRÊN TUỔI XE,CHI PHÍ LĂN BÁNH, 
     // NẾU XE QUÁ CŨ , TỐN NHIỀU TIỀN MÀ LỜI THẤP THÌ KO ĐỦ TIÊU CHUẨN
-    bool KiemTraXeCoNenThayThe(int namHienTai = 2026) const {
-        int tuoiXe = namHienTai - getNamSanXuat(); // hàm tuổi xe 
-        double giaTriHienTai = TinhGiaTriHienTai(namHienTai); 
-        // Chi phi lan banh trong 100 km
-        double chiPhiLanBanh = TinhChiPhiLanBanh(100);
-        // Xe quá cũ + giá trị còn lại thấp
-        // + chi phí lăn bánh cao
-        if (tuoiXe > 15 &&
-            giaTriHienTai < getGiaGoc() * 0.3 && // giá trị hiện tại < giá gốc x 30% ( nghĩa là Giá trị hiện tại của xe đã thấp hơn 30% giá gốc.)
-            chiPhiLanBanh > 1000000) {
-            return true; // là nên thay thế rồi
-        }
-        return false; // xe vẫn ổn chạy được
+ bool KiemTraXeCoNenThayThe(int namHienTai) const
+{
+    if (getNamSanXuat() > namHienTai)
+    {
+        cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+        return false;
     }
+    int tuoiXe = namHienTai - getNamSanXuat();
+    double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
+    double chiPhiLanBanh = TinhChiPhiLanBanh(100);
+    if (tuoiXe > 15 && giaTriHienTai < getGiaGoc() * 0.3 && chiPhiLanBanh > 1000000)
+    {
+        return true;
+    }
+
+    return false;
+}
 // HÀM KIỂM TRA CÓ ĐƯỢC VÀO PHỐ KO , XE < 1,5 tấn auto được vào , xe lớn mà chạy trong khung 6h - 9h&& 16h-20h thì gây ùn tắc giao thông rất nặng
-    bool DuocPhepVaoPho(int gioHienTai) const {
-        // Xe <= 1.5 tan duoc phep vao
-        if (taiTrong <= 1.5) {
-            return true; // cho vào
-        }
-        // Khung gio 6h - 9h
-        if (gioHienTai >= 6 && gioHienTai < 9) {
-            return false; // ko cho vào
-        }
-        // Khung gio 16h - 20h
-        if (gioHienTai >= 16 && gioHienTai < 20) {
-            return false; // ko cho vào
-        }
-        return true;// cho vào
+    bool DuocPhepVaoPho(int gioHienTai) const
+{
+    if (gioHienTai < 0 || gioHienTai > 23)
+    {
+        cout << "[LOI] Gio hien tai phai tu 0 den 23!\n";
+        return false;
     }
+
+    if (taiTrong <= 1.5)
+        return true;
+
+    if (gioHienTai >= 6 && gioHienTai < 9)
+        return false;
+
+    if (gioHienTai >= 16 && gioHienTai < 20)
+        return false;
+
+    return true;
+}
     // Hàm nhập
     void Nhap(istream& in) {
         // Goi ham Nhap cua lop cha
