@@ -25,8 +25,8 @@ public:
     }
 
     // hàm khởi tạo sao chép
-    XeTai(const XeTai& x)
-        : PhuongTien(x)
+    XeTai(const XeTai& p)
+        : PhuongTien(p)
     {
         taiTrong = x.taiTrong;
         soTrucBanhXe = x.soTrucBanhXe;
