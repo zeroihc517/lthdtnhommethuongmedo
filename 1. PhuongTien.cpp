@@ -18,30 +18,30 @@ protected:
 public:
     // Hàm khởi tạo mặc định
     PhuongTien() {
-        bienSo="";
-        hangSanXuat="";
-        namSanXuat=1900;
-        giaGoc=0;
-        thangHetHanBaoHiem=1;
-        namHetHanBaoHiem=2025;
+        bienSo = "";
+        hangSanXuat = "";
+        namSanXuat = 1900;
+        giaGoc = 0;
+        thangHetHanBaoHiem = 1;
+        namHetHanBaoHiem = 2025;
     }
     // Hàm khởi tạo có tham số
     PhuongTien(string bs, string hsx, int nsx, double gia, int thanghh, int namhh) {
-        bienSo=bs;
-        hangSanXuat=hsx;
-        namSanXuat=nsx;
-        giaGoc=gia;
-        thangHetHanBaoHiem=thanghh;
-        namHetHanBaoHiem=namhh;
+        bienSo = bs;
+        hangSanXuat = hsx;
+        namSanXuat = nsx;
+        giaGoc = gia;
+        thangHetHanBaoHiem = thanghh;
+        namHetHanBaoHiem = namhh;
     }
     // Hàm khởi tạo sao chép
     PhuongTien(const PhuongTien& p) {
-        bienSo=p.bienSo;
-        hangSanXuat=p.hangSanXuat;
-        namSanXuat=p.namSanXuat;
-        giaGoc=p.giaGoc;
-        thangHetHanBaoHiem=p.thangHetHanBaoHiem;
-        namHetHanBaoHiem=p.namHetHanBaoHiem;
+        bienSo = p.bienSo;
+        hangSanXuat = p.hangSanXuat;
+        namSanXuat = p.namSanXuat;
+        giaGoc = p.giaGoc;
+        thangHetHanBaoHiem = p.thangHetHanBaoHiem;
+        namHetHanBaoHiem = p.namHetHanBaoHiem;
     }
     // Hàm hủy
     virtual ~PhuongTien() {}
@@ -90,39 +90,39 @@ public:
     }
     // Nhập thông tin
     virtual void Nhap(istream& in) {
-        setColor(C_VIEN); cout<<"  "<<char(204)<<char(205)<<" Nhap Bien so: ";
+        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Bien so: ";
         setColor(C_TEXT); getline(in, bienSo);
-        setColor(C_VIEN); cout<<"  "<<char(204)<<char(205)<<" Nhap Hang san xuat: ";
+        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Hang san xuat: ";
         setColor(C_TEXT); getline(in, hangSanXuat);
-        setColor(C_VIEN); cout<<"  "<<char(204)<<char(205)<<" Nhap Nam san xuat: ";
+        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Nam san xuat: ";
         setColor(C_TEXT); in>>namSanXuat;
         if (in.fail()) { in.clear(); }                                  // Nếu lượng nhập bị lỗi thì xóa có lỗi
         in.ignore(32767, '\n');
-        setColor(C_VIEN); cout<<"  "<<char(204)<<char(205)<<" Nhap Gia goc (VND): ";
-        setColor(C_TEXT); in>>giaGoc;
+        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Gia goc (VND): ";
+        setColor(C_TEXT); in >> giaGoc;
         if (in.fail()) { in.clear(); }                                  // Xử lý có lỗi (nếu có)
         in.ignore(32767, '\n');
     }
     // Hiển thị thông tin
     virtual void HienThiThongTin(ostream& out) const {
-        out<<left
-           <<setw(W_BIENSO)<<bienSo                                 // In biển số theo độ rộng W_BIENSO
-           <<setw(W_HANG)<<hangSanXuat                              // In hãng sản suất
-           <<setw(W_NAMSX)<<namSanXuat                              // In năm sản xuất
-           <<setw(W_LOAI)<<GetLoaiPhuongTien()                      // Gọi hàm ảo để lấy loại phương tiện
-           <<setw(W_THONGSO)<<GetThongSo();                         // Gọi hàm ảo để lấy thông số riêng
+        out << left
+            << setw(W_BIENSO) << bienSo                                 // In biển số theo độ rộng W_BIENSO
+            << setw(W_HANG) << hangSanXuat                              // In hãng sản suất
+            << setw(W_NAMSX) << namSanXuat                              // In năm sản xuất
+            << setw(W_LOAI) << GetLoaiPhuongTien()                      // Gọi hàm ảo để lấy loại phương tiện
+            << setw(W_THONGSO) << GetThongSo();                         // Gọi hàm ảo để lấy thông số riêng
         stringstream ssPhi;                                         // Tạo lượng chuỗi để định dạng phí bảo trì
-        ssPhi<<fixed<<setprecision(0)<<TinhPhiBaoTri()<<" VND";     
-        out<<right<<setw(W_PHI)<<ssPhi.str();                       // Căn lề phải và in phí bảo trì theo độ rộng cột
+        ssPhi << fixed << setprecision(0) << TinhPhiBaoTri() << " VND";     
+        out << right << setw(W_PHI) << ssPhi.str();                       // Căn lề phải và in phí bảo trì theo độ rộng cột
     }
     // Toán tử nhập
-    friend istream& operator >> (istream& in, PhuongTien& pt) {
-        pt.Nhap(in);
+    friend istream& operator >> (istream& in, PhuongTien& p) {
+        p.Nhap(in);
         return in;
     }
     // Toán tử xuất
-    friend ostream& operator << (ostream& out, const PhuongTien& pt) {
-        pt.HienThiThongTin(out);
+    friend ostream& operator << (ostream& out, const PhuongTien& p) {
+        p.HienThiThongTin(out);
         return out;
     }
 };
