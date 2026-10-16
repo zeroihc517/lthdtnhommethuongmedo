@@ -1,15 +1,12 @@
 class XeTai : public PhuongTien
 {
 private:
-    double taiTrong;        // Don vi: tan
-    int soTrucBanhXe;      // So truc cua xe
-    string loaiThungXe;    // Loai thung xe
+    double taiTrong;        // đơn vị : tấn
+    int soTrucBanhXe;      // số trục của xe ( vidu là xe tải có thể 2 3 trục nối tiếp nhau ) 
+    string loaiThungXe;    // Loại thùng xe ( chia ra nhiều loại, như là đông lạnh , có nắp , hay chỉ phủ miếng bạt mà ko có nắp,)
 
 public:
-    // =====================================================
-    // 1. HAM KHOI TAO MAC DINH
-    // =====================================================
-    XeTai()
+    XeTai() // Hàm khởi tạo mặc định
         : PhuongTien()
     {
         taiTrong = 0;
@@ -17,22 +14,17 @@ public:
         loaiThungXe = "";
     }
 
-    // =====================================================
-    // 2. HAM KHOI TAO CO THAM SO
-    // =====================================================
     XeTai(string bs, string hsx, int nsx, double gia,
           int thanghh, int namhh,
           double tt, int soTruc, string loaiThung)
-        : PhuongTien(bs, hsx, nsx, gia, thanghh, namhh)
+        : PhuongTien(bs, hsx, nsx, gia, thanghh, namhh) // hàm khởi tạo có tham số
     {
         taiTrong = tt;
         soTrucBanhXe = soTruc;
         loaiThungXe = loaiThung;
     }
 
-    // =====================================================
-    // 3. HAM KHOI TAO SAO CHEP
-    // =====================================================
+    // hàm khởi tạo sao chép
     XeTai(const XeTai& x)
         : PhuongTien(x)
     {
@@ -41,60 +33,47 @@ public:
         loaiThungXe = x.loaiThungXe;
     }
 
-    // =====================================================
-    // 4. HAM HUY
-    // =====================================================
-    ~XeTai() {}
-    // =====================================================
-    // 5. GETTER
-    // =====================================================
+    // hàm hủy
+    ~XeTai() override {}
+    // hàm get tải trọng
     double getTaiTrong() const
     {
         return taiTrong;
     }
-
+// hàm get số trục xe
     int getSoTrucBanhXe() const
     {
         return soTrucBanhXe;
     }
-
+// hàm get loại thùng xe
     string getLoaiThungXe() const
     {
         return loaiThungXe;
     }
-
-    // =====================================================
-    // 6. SETTER
-    // =====================================================
+// hàm set tai trong
     void setTaiTrong(double tt)
     {
         taiTrong = tt;
     }
-
+// hàm set số trục bánh xe
     void setSoTrucBanhXe(int soTruc)
     {
         soTrucBanhXe = soTruc;
     }
-
+// hàm set loại thùng xe
     void setLoaiThungXe(string loaiThung)
     {
         loaiThungXe = loaiThung;
     }
 
-    // =====================================================
-    // 7. DA HINH - LOAI PHUONG TIEN
-    // =====================================================
-    string GetLoaiPhuongTien() const 
+// đa hình lấy từ hàm GetLoaiPhuongTien() của lớp cha 
+    string GetLoaiPhuongTien() const override
     {
         return "Xe tai";
     }
 
-    // =====================================================
-    // 8. DA HINH - THONG SO
-    // =====================================================
-    // Dua tat ca thong tin dac trung cua XeTai vao day
-    // de PhuongTien::HienThiThongTin() co the hien thi.
-    string GetThongSo() const 
+// đa hình lấy từ hàm GetThongSo() của lớp cha 
+    string GetThongSo() const override
     {
         stringstream ss;
 
@@ -105,100 +84,86 @@ public:
         return ss.str();
     }
 
-    // =====================================================
-    // 9. DA HINH - TINH PHI BAO TRI
-    // =====================================================
-    // Phi co ban: 1.000.000
-    // + tai trong * 200.000
-    double TinhPhiBaoTri() const  
+  // đa hình lấy từ hàm TinhPhiBaoTri() của lớp cha 
+    double TinhPhiBaoTri() const override
     {
         return 1000000 + taiTrong * 200000;
     }
 
-    // =====================================================
-    // 10. HAM SANG TAO
-    // TINH CHI PHI LAN BANH
-    // =====================================================
-    double TinhChiPhiLanBanh(double quangDuong) const
+   // hàm sáng tạo bắt đầu từ đây
+    double TinhChiPhiLanBanh(double quangDuong) const // hàm chi phí lăn bánh ( như là tiền xăng, tiền bảo dưỡng, tiền hư hao xe cũ, tiền trục trặc máy móc, ...  )
     {
         if (quangDuong < 0)
             return 0;
 
-        double chiPhiMoiKm = 5000; // mac dinh chi phi lan banh = 5000d/1km .
+        double chiPhiMoiKm = 5000; // mặc định chi phí lăn bánh = 5000d/1km . ( giống như đi 1km là tốn 5000đ tiền xăng )
 
-        // Tai trong cang lon -> chi phi cang cao
-        if (taiTrong > 5)
+        
+        if (taiTrong > 5) // nếu tải trọng càng lớn thì chi phí càng cao ( vì xe càng lớn, càng nặng , thì năng lượng cần tiêu thụ sẽ phát sinh lớn hơn, cần công suất lớn hơn , tốn tiền xăng hơn )
         {
-            chiPhiMoiKm += 3000;  // neu tai trong lon hon 5 thi + them 3000d vao chiphi/1km
+            chiPhiMoiKm += 3000;  // nếu tải trọng lớn hơn 5 thì + thêm 3000d vào chiphi/1km
         }
-        else if (taiTrong > 2)	  // neu tai trong lon hon 2 thi + them 1500d vao chiphi/1km
+        else if (taiTrong > 2)	  // nếu tải trọng lớn hơn 2 thì + thêm 1500d vào chiphi/1km
         {
             chiPhiMoiKm += 1500;
         }
 
-        // Xe nhieu truc -> chi phi van hanh cao hon
-        if (soTrucBanhXe >= 4)	  // neu xe tai co nhieu hon 4 truc thi + them 2000d vao chiphi/1km
+        // Xe nhiều trục -> chi phí vận hành cao hơn ( xe càng kéo theo nhiều trục , xe tải cần nhiều năng lượng hơn để tăng sức kéo , cộng thêm  năng lượng hao phí thì chi phí lăn bánh sẽ tăng ) 
+        if (soTrucBanhXe >= 4)	  // nếu xe tải có nhiều hơn 4 trục thì + thêm 2000d vào chiphi/1km
         {
             chiPhiMoiKm += 2000;
         }
-        else if (soTrucBanhXe == 3) // neu xe tai co 3 truc thi + them 1000d vao chiphi/1km
+        else if (soTrucBanhXe == 3) // nếu xe tải có 3 trục thì + thêm 1000d vào chiphi/1km
         {
             chiPhiMoiKm += 1000;
         }
 
-        // Xe qua cu -> chi phi van hanh tang
-        int tuoiXe = 2026 - getNamSanXuat(); // tuoixe = 2026 - nam san xuat 
+        // Xe quá cũ -> chi phí vận hành tăng ( xe đời cũ , máy móc đời cũ sẽ dễ dàng hư hơn , tốn nhiều nhiên liệu hơn để chạy )
+        int tuoiXe = 2026 - getNamSanXuat(); // tuổi xe = 2026 - năm sản xuất 
 
         if (tuoiXe > 10)
         {
-            chiPhiMoiKm += 1000; // xe sai hon 10 nam roi thi máy cu nen van hanh ton tien hon nên +1000d/1km;
+            chiPhiMoiKm += 1000; // xe sài hơn 10 năm rồi thì máy cũ nên vận hành tốn tiền hơn nên +1000d/1km;
         }
 
         return quangDuong * chiPhiMoiKm; // tổng giá tiền phải tốn cũng mỗi chuyến đi
     }
 
-    // =====================================================
-    // 11. HAM SANG TAO
-    // TINH CUOC VAN CHUYEN
-    // =====================================================
+    // hàm TíNH CƯỚC VẬN CHUYỂN ( đây là tiền mà khách phải trả khi muốn đặt xe )  = hàm chi phí lăn bánh + hàm phí vận chuyển 
     double TinhCuocVanChuyen(double quangDuong) const // Giá tiền 1 cuốc xe tai khách phải trả 
     {
         if (quangDuong < 0)
             return 0;
 
-        // Cuoc van chuyen co su dung chi phi lan banh
+        // tạo hàm chi phí lăn bánh trước 
         double chiPhiLanBanh = TinhChiPhiLanBanh(quangDuong);
 
-        double phiVanChuyen = 0;
+        double phiVanChuyen = 0; // mặc định hàm phí vận chuyển = 0 trước
 
-        // Tinh phi dua tren tai trong
+        // Tính phí dựa trên tải trọng
         if (taiTrong <= 2)
         {
-            phiVanChuyen = quangDuong * 5000;
+            phiVanChuyen = quangDuong * 5000; // tải trọng <= 2 thì tiền = quãng đường * 5000đ
         }
         else if (taiTrong <= 5)
         {
-            phiVanChuyen = quangDuong * 8000;
+            phiVanChuyen = quangDuong * 8000; // tải trọng <= 5 thì tiền = quãng đường * 8000đ
         }
         else
         {
-            phiVanChuyen = quangDuong * 12000;
+            phiVanChuyen = quangDuong * 12000; // tải trọng > 5 thì tiền = quãng đường * 12000đ
         }
 
-        // Thung dong lanh ton chi phi cao hon ( vi xe đông lạnh cần máy móc hơn để bảo quản đồ đông lạnh ) 
+        // Thùng đông lạnh tốn chi phí cao hơn ( vi xe đông lạnh cần máy móc hơn để bảo quản đồ đông lạnh ) 
         if (loaiThungXe == "Dong lanh" ||
             loaiThungXe == "dong lanh")
         {
-            phiVanChuyen += quangDuong * 3000;
+            phiVanChuyen += quangDuong * 3000;// tiền = quãng đường * 3000đ nữa
         }
 
-        return chiPhiLanBanh + phiVanChuyen;
+        return chiPhiLanBanh + phiVanChuyen;// ta có hàm cước vận chuyển 
     }
-
-    // =====================================================
-    // 12. HAM SANG TAO
-    // DANH GIA KHA NANG VAN CHUYEN
-    // =====================================================
+    // ĐÁNH GIẢ KHẢ NĂNG VẬN CHUYỂN DỰA TRÊN TẢI TRỌNG , ĐỂ KHÁCH HÀNG CHỌN
     string DanhGiaKhaNangVanChuyen() const // đánh giá xem vận chuyển hàng nặng hay nhẹ
     {
         if (taiTrong <= 2)
@@ -213,11 +178,7 @@ public:
 
         return "Van chuyen hang nang";
     }
-
-    // =====================================================
-    // 13. HAM SANG TAO
-    // PHAN LOAI THUNG XE
-    // =====================================================
+ // HÀM PHÂN LOẠI THÙNG XE , ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
     string PhanLoaiThungXe() const // hàm phân loại thùng xe
     {
         if (loaiThungXe == "Dong lanh" ||
@@ -247,19 +208,8 @@ public:
         return "Khong xac dinh";
     }
 
-    // =====================================================
-    // 14. HAM SANG TAO
-    // KIEM TRA TAI TRONG
-    // =====================================================
-    bool KiemTraTaiTrong() const
-    {
-        return taiTrong <= 5;
-    }
-
-    // =====================================================
-    // 15. HAM SANG TAO
-    // KIEM TRA XE CO NEN THAY THE KHONG
-    // =====================================================
+    // HÀM KIỂM TRA XE CÓ ĐẢM BẢO CHẤT LƯỢNG/LỢI NHUẬN HAY KO , DỰA TRÊN TUỔI XE,CHI PHÍ LĂN BÁNH, 
+// NẾU XE QUÁ CŨ , TỐN NHIỀU TIỀN MÀ LỜI THẤP THÌ KO ĐỦ TIÊU CHUẨN
     bool KiemTraXeCoNenThayThe(int namHienTai = 2026) const
     {
         int tuoiXe = namHienTai - getNamSanXuat(); // hàm tuổi xe 
@@ -277,42 +227,36 @@ public:
             giaTriHienTai < getGiaGoc() * 0.3 && // giá trị hiện tại < giá gốc x 30% ( nghĩa là Giá trị hiện tại của xe đã thấp hơn 30% giá gốc.)
             chiPhiLanBanh > 1000000)
         {
-            return true;
+            return true; // là nên thay thế rồi
         }
 
-        return false;
+        return false; // xe vẫn ổn chạy được
     }
-
-    // =====================================================
-    // 16. HAM SANG TAO
-    // KIEM TRA CO DUOC VAO NOI DO KHONG
-    // =====================================================
+// HÀM KIỂM TRA CÓ ĐƯỢC VÀO PHỐ KO , XE < 1,5 tấn auto được vào , xe lớn mà chạy trong khung 6h - 9h&& 16h-20h thì gây ùn tắc giao thông rất nặng
     bool DuocPhepVaoPho(int gioHienTai) const
     {
         // Xe <= 1.5 tan duoc phep vao
         if (taiTrong <= 1.5)
         {
-            return true;
+            return true; // cho vào
         }
 
         // Khung gio 6h - 9h
         if (gioHienTai >= 6 && gioHienTai < 9)
         {
-            return false;
+            return false; // ko cho vào
         }
 
         // Khung gio 16h - 20h
         if (gioHienTai >= 16 && gioHienTai < 20)
         {
-            return false;
+            return false; // ko cho vào
         }
 
-        return true;
+        return true;// cho vào
     }
 
-    // =====================================================
-    // 17. NHAP
-    // =====================================================
+// hàm nhập
     void Nhap(istream& in)  
     {
         // Goi ham Nhap cua lop cha
@@ -326,7 +270,7 @@ public:
         setColor(C_TEXT);
         in >> taiTrong;
 
-        if (in.fail())
+        if (in.fail()) // nếu nhập lỗi thì xóa màn hình
         {
             in.clear();
         }
@@ -351,35 +295,29 @@ public:
 
         if (in.fail())
         {
-            in.clear();
+            in.clear();// nếu nhập lỗi thì xóa màn hình
         }
 
         in.ignore(32767, '\n');
     }
 
-    // =====================================================
-    // 18. HIEN THI THONG TIN
-    // =====================================================
+ // hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const  
     {
-        // PhuongTien se tu dong goi GetThongSo()
-        // cua XeTai do GetThongSo() la ham ao.
+        // PhuongTien sẽ tự động gọi hàm GetThongSo()
+        // của XeTai do GetThongSo() là hàm ảo.
         PhuongTien::HienThiThongTin(out);
     }
 
-    // =====================================================
-    // 19. TOAN TU NHAP
-    // =====================================================
-    friend istream& operator>>(istream& in, XeTai& x)
+    // hàm quá tải nhập
+    friend istream& operator>>(istream& in, XeTai& p)
     {
         x.Nhap(in);
         return in;
     }
 
-    // =====================================================
-    // 20. TOAN TU XUAT
-    // =====================================================
-    friend ostream& operator<<(ostream& out, const XeTai& x)
+   // hàm quá tải xuất
+    friend ostream& operator<<(ostream& out, const XeTai& p)
     {
         x.HienThiThongTin(out);
         return out;
