@@ -73,14 +73,14 @@ public:
         else if (taiTrong > 2) {  // nếu tải trọng lớn hơn 2 thì + thêm 1500d vào chiphi/1km
             chiPhiMoiKm += 1500;
         }
-        // Xe nhiều trục -> chi phí vận hành cao hơn ( xe càng kéo theo nhiều trục , xe tải cần nhiều năng lượng hơn để tăng sức kéo , cộng thêm  năng lượng hao phí thì chi phí lăn bánh sẽ tăng ) 
+        // Xe nhiều trục -> chi phí vận hành cao hơn (xe càng kéo theo nhiều trục , xe tải cần nhiều năng lượng hơn để tăng sức kéo , cộng thêm năng lượng hao phí thì chi phí lăn bánh sẽ tăng) 
         if (soTrucBanhXe >= 4) {  // nếu xe tải có nhiều hơn 4 trục thì + thêm 2000d vào chiphi/1km
             chiPhiMoiKm += 2000;
         }
         else if (soTrucBanhXe == 3) { // nếu xe tải có 3 trục thì + thêm 1000d vào chiphi/1km
             chiPhiMoiKm += 1000;
         }
-        // Xe quá cũ -> chi phí vận hành tăng ( xe đời cũ , máy móc đời cũ sẽ dễ dàng hư hơn , tốn nhiều nhiên liệu hơn để chạy )
+        // Xe quá cũ -> chi phí vận hành tăng (xe đời cũ , máy móc đời cũ sẽ dễ dàng hư hơn , tốn nhiều nhiên liệu hơn để chạy)
         int tuoiXe = 2026 - getNamSanXuat(); // tuổi xe = 2026 - năm sản xuất 
         if (tuoiXe > 10) {
             chiPhiMoiKm += 1000; // xe sài hơn 10 năm rồi thì máy cũ nên vận hành tốn tiền hơn nên +1000d/1km;
@@ -105,7 +105,7 @@ public:
         }
         // Thùng đông lạnh tốn chi phí cao hơn ( vi xe đông lạnh cần máy móc hơn để bảo quản đồ đông lạnh ) 
         if (loaiThungXe == "Dong lanh" || loaiThungXe == "dong lanh") {
-            phiVanChuyen += quangDuong * 3000;// tiền = quãng đường * 3000đ nữa
+            phiVanChuyen += quangDuong * 3000;    // tiền = quãng đường * 3000đ nữa
         }
         return chiPhiLanBanh + phiVanChuyen;// ta có hàm cước vận chuyển 
     }
@@ -119,7 +119,7 @@ public:
         }
         return "Van chuyen hang nang";
     }
-     // HÀM PHÂN LOẠI THÙNG XE , ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
+     // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
     string PhanLoaiThungXe() const { // hàm phân loại thùng xe
         if (loaiThungXe == "Dong lanh" || loaiThungXe == "dong lanh") {
             return "Thung dong lanh";   // thùng mà có hệ thống giữ nhiệt đông lạnh
@@ -176,7 +176,7 @@ public:
         cout << "  " << char(204) << char(205) << " Nhap Tai trong (tan): ";
         setColor(C_TEXT);
         in >> taiTrong;
-        if (in.fail()) {    // nếu nhập lỗi thì xóa màn hình
+        if (in.fail()) {    // Nếu nhập lỗi thì xóa màn hình
             in.clear();
         }
         in.ignore(32767, '\n');
