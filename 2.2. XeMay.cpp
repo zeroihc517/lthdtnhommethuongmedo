@@ -1,6 +1,6 @@
 class XeMay:public PhuongTien{
 private:
-    double congSuat;          // Công suất (đơn vị: cc)
+    double congSuat;          // Công suất 
     string heTruyenDong;      // Xe số, xe ga, xe côn tay
     double soKmDaDi;          // Số km xe đã đi
 public:
@@ -29,9 +29,9 @@ public:
     string getHeTruyenDong() const {return heTruyenDong;}
     double getSoKmDaDi() const {return soKmDaDi;}
     // Setter
-    void setCongSuat(double cs){congSuat=cs;}
+    void setCongSuat(double cs){if(cs>=0) congSuat=cs;}
     void setHeTruyenDong(string htd){heTruyenDong=htd;}
-    void setSoKmDaDi(double skm){soKmDaDi=skm;}
+    void setSoKmDaDi(double skm){if(skm>=0) soKmDaDi=skm;}
     // Lấy loại phương tiện (Đa hình)
     string GetLoaiPhuongTien() const override{return "Xe may";}
     // Lấy thông số riêng của xe máy (Đa hình)
@@ -67,13 +67,15 @@ public:
     }
     // Hàm so sánh chi phí giữ xe giữa vé ngày và vé tháng
     void TienGuiXe(int soNgay) const{
-        if(soNgay<0) return;
+        if(soNgay<=0) return;
         double veNgay=soNgay*5000;
         double veThang=120000;
         if(veNgay>veThang){
             cout<<"Ban nen mua ve thang"<<endl;
-        }else{
+        }else if{
             cout<<"Ban nen mua ve ngay"<<endl;
+        }else{
+            cout<<"Hai phuong an co chi phi bang nhau"<<endl;
         }
     }
     // Hàm nhập thông tin xe máy
