@@ -52,18 +52,18 @@ public:
     int getNamSanXuat() const { return namSanXuat; }
     double getGiaGoc() const { return giaGoc; }
     // Hàm set
-    void setBienSo(string bs) { bienSo=bs; }
-    void setHangSanXuat(string hsx) { hangSanXuat=hsx; }
-    void setNamSanXuat(int nsx) { namSanXuat=nsx; }
-    void setGiaGoc(double gia) { giaGoc=gia; }
+    void setBienSo(string bs) { bienSo = bs; }
+    void setHangSanXuat(string hsx) { hangSanXuat = hsx; }
+    void setNamSanXuat(int nsx) { namSanXuat = nsx; }
+    void setGiaGoc(double gia) { giaGoc = gia; }
     // Phương thức thuần ảo
     virtual string GetLoaiPhuongTien() const=0;     // Trả về loại phương tiện, ví dụ: Xe máy, Ô tô... 
     virtual string GetThongSo() const=0;            // Trả về thông số riêng của phương tiện, ví dụ: Số chỗ ngồi, dung tích xi lanh...
     virtual double TinhPhiBaoTri() const=0;         // Tính phí bảo trì của phương tiện
     // Tính giá trị hiện tại
     double TinhGiaTriHienTai(int namHienTai=2026) const {
-        int soNam=namHienTai-namSanXuat;
-        if (soNam<0) { soNam=0; }
+        int soNam = namHienTai - namSanXuat;
+        if (soNam < 0) { soNam = 0; }
         return giaGoc*pow(0.9, soNam);
     }
     // Nhập thông tin
