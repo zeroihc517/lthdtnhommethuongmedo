@@ -64,34 +64,34 @@ public:
         return 1000000 + taiTrong * 200000;
     }
    // hàm chi phí lăn bánh (như là tiền xăng, tiền bảo dưỡng, tiền hư hao xe cũ, tiền trục trặc máy móc,... )
-     double TinhChiPhiLanBanh(double quangDuong, int namHienTai) const {
-    // Quãng đường không hợp lệ
-    if (quangDuong < 0) { return 0; }
-    if (getNamSanXuat() > namHienTai) {
-        cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+    double TinhChiPhiLanBanh(double quangDuong, int namHienTai) const {
+        // Quãng đường không hợp lệ
+        if (quangDuong < 0) { return 0; }
+        if (getNamSanXuat() > namHienTai) {
+            cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+        }
+        // Chi phi co ban: 5000 VND/km
+        double chiPhiMoiKm = 5000;
+        // Tải trọng càng lớn -> chi phí vận hành càng cao
+        if (taiTrong > 5) {
+            chiPhiMoiKm += 3000;
+        } else if (taiTrong > 2) {
+            chiPhiMoiKm += 1500;
+        }
+        // Số trục càng nhiều -> chi phí vận hành càng cao
+        if (soTrucBanhXe >= 4) {
+            chiPhiMoiKm += 2000;
+        } else if (soTrucBanhXe == 3) {
+            chiPhiMoiKm += 1000;
+        }
+        // Xe sử dụng trên 10 năm -> chi phí vận hành tăng
+        int tuoiXe = namHienTai - getNamSanXuat();
+        if (tuoiXe > 10) {
+            chiPhiMoiKm += 1000;
+        }
+        // Tổng chi phí lăn bánh
+        return quangDuong * chiPhiMoiKm;
     }
-    // Chi phi co ban: 5000 VND/km
-    double chiPhiMoiKm = 5000;
-    // Tải trọng càng lớn -> chi phí vận hành càng cao
-    if (taiTrong > 5) {
-        chiPhiMoiKm += 3000;
-    } else if (taiTrong > 2) {
-        chiPhiMoiKm += 1500;
-    }
-    // Số trục càng nhiều -> chi phí vận hành càng cao
-    if (soTrucBanhXe >= 4) {
-        chiPhiMoiKm += 2000;
-    } else if (soTrucBanhXe == 3) {
-        chiPhiMoiKm += 1000;
-    }
-    // Xe sử dụng trên 10 năm -> chi phí vận hành tăng
-    int tuoiXe = namHienTai - getNamSanXuat();
-    if (tuoiXe > 10) {
-        chiPhiMoiKm += 1000;
-    }
-    // Tổng chi phí lăn bánh
-    return quangDuong * chiPhiMoiKm;
-}
     // Hàm tính cước vận chuyển (đây là tiền mà khách phải trả khi muốn đặt xe)  = hàm chi phí lăn bánh + hàm phí vận chuyển 
     double TinhCuocVanChuyen(double quangDuong, int namHienTai) const {
         if (quangDuong < 0) return 0;
