@@ -54,18 +54,25 @@ public:
         if(congSuat<=125) return "Bang A1";
         return "Bang A";
     }
-    (// Hàm kiểm tra xe có nên thay nhớt không
+    // Hàm kiểm tra xe có nên thay nhớt không
     void KiemTraThayNhot() const{
         double kmDaDiLanTruoc=soKmDaDi-soKmThayNhotGanNhat;
         string htd=toLower(heTruyenDong);
-        if(kmDaDiLanTruoc>=1500){
-            if(htd=="xe ga"&&kmDaDiLanTruoc>=4500){
+        if(htd=="xe ga"){
+            if(kmDaDiLanTruoc>=4500){
                 cout<<"Nen thay nhot"<<endl;
+            }else {
+                cout<<"Nhot con tot"<<endl;
             }
         }else {
-            cout<<"Nhot con tot"<<endl;
+            if(kmDaDiLanTruoc>=1500){
+                cout<<"Nen thay nhot"<<endl;
+            }
+            else{
+                cout<<"Nhot con tot"<<endl;
+            }
         }
-    })// chua xong
+    }
     // Hàm so sánh chi phí giữ xe giữa vé ngày và vé tháng
     void TienGuiXe(int soNgay) const{
         if(soNgay<=0) return;
@@ -112,6 +119,7 @@ public:
     // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const override{
         PhuongTien::HienThiThongTin(out);
+        out<<"Cong suat: "<<congSuat<<endl<<"He truyen dong: "<<heTruyenDong<<endl<<"So km da di: "<<soKmDaDi<<endl;
     }
     // Quá tải nhập
     friend istream& operator>>(istream& in, XeMay &p){
