@@ -3,7 +3,7 @@ private:
     double congSuat;              // Công suất 
     string heTruyenDong;          // Xe số, xe ga, xe côn tay
     double soKmDaDi;              // Số km xe đã đi
-    double soKmThayNhotGanNhat;   //
+    double soKmThayNhotGanNhat;   // Số km lần thay nhớt gần nhất
 public:
     // Hàm khởi tạo mặc định
     XeMay():PhuongTien(){
@@ -97,7 +97,7 @@ public:
         PhuongTien::Nhap(in);        // Gọi hàm nhập của lớp PhuongTien
         // Nhập công suất
         setColor(C_VIEN);
-        cout<<" "<<char(204)<<char(205)<<"Nhap Cong suat: ";
+        cout<<" "<<char(204)<<char(205)<<"Nhap cong suat: ";
         setColor(C_TEXT);
         in>>congSuat;
         if(in.fail()||congSuat<0){
@@ -107,12 +107,12 @@ public:
         in.ignore(32767,'\n');
         // Nhập hệ truyền động
         setColor(C_VIEN);
-        cout<<" "<<char(204)<<char(205)<<"Nhap He truyen dong: ";
+        cout<<" "<<char(204)<<char(205)<<"Nhap he truyen dong: ";
         setColor(C_TEXT);
         getline(in,heTruyenDong);
         // Nhập số km đã đi
         setColor(C_VIEN);
-        cout<<" "<<char(204)<<char(205)<<"Nhap So km da di: ";
+        cout<<" "<<char(204)<<char(205)<<"Nhap so km da di: ";
         setColor(C_TEXT);
         in>>soKmDaDi;
         if(in.fail()||soKmDaDi<0){
@@ -120,11 +120,20 @@ public:
             soKmDaDi=0;
         }
         in.ignore(32767,'\n');
+        // Nhập số km thay nhớt gần nhất
+        setColor(C_VIEN);
+        cout<<" "<<char(204)<<char(205)<<"Nhap so km da thay nhot gan nhat: ";
+        setColor(C_TEXT);
+        in>>soKmThayNhotGanNhat;
+        if(in.fail()||soKmThayNhotGanNhat<0){
+            in.clear();
+            soKmThayNhotGanNhat=0;
+        }
+        in.ignore(32767,'\n');
     }
     // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const override{
         PhuongTien::HienThiThongTin(out);
-        out<<"Cong suat: "<<congSuat<<" cc;"<<endl<<"He truyen dong: "<<heTruyenDong<<";"<<endl<<"So km da di: "<<soKmDaDi<<" km;"<<endl;
     }
     // Quá tải nhập
     friend istream& operator>>(istream& in, XeMay &p){
