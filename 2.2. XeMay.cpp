@@ -1,26 +1,30 @@
 class XeMay:public PhuongTien{
 private:
-    double congSuat;          // Công suất 
-    string heTruyenDong;      // Xe số, xe ga, xe côn tay
-    double soKmDaDi;          // Số km xe đã đi
+    double congSuat;              // Công suất 
+    string heTruyenDong;          // Xe số, xe ga, xe côn tay
+    double soKmDaDi;              // Số km xe đã đi
+    double soKmThayNhotGanNhat;   //
 public:
     // Hàm khởi tạo mặc định
     XeMay():PhuongTien(){
         congSuat=0;
         heTruyenDong="Xe so";
-        soKmDaDi=0;   
+        soKmDaDi=0; 
+        soKmThayNhotGanNhat=0;
     }
     // Hàm khởi tạo có tham số
-    XeMay(string bs,string hsx, int nsx, double gia, double cs, string htd, double skm):PhuongTien(bs, hsx, nsx, gia, 0, 0){
+    XeMay(string bs,string hsx, int nsx, double gia, double cs, string htd, double skm, double skmNhot):PhuongTien(bs, hsx, nsx, gia, 0, 0){
         congSuat=(cs>0)?cs:0;
         heTruyenDong=htd;
         soKmDaDi=(skm>0)?skm:0;
+        soKmThayNhotGanNhat=(skmNhot>=0)?skmNhot:0;
     }
     // Hàm khởi tạo sao chép
     XeMay(const XeMay &p):PhuongTien(p){
         congSuat=p.congSuat;
         heTruyenDong=p.heTruyenDong;
         soKmDaDi=p.soKmDaDi;
+        soKmThayNhotGanNhat=p.soKmThayNhotGanNhat;
     }
     // Hàm hủy
     ~XeMay() override{}
@@ -28,10 +32,12 @@ public:
     double getCongSuat() const {return congSuat;}
     string getHeTruyenDong() const {return heTruyenDong;}
     double getSoKmDaDi() const {return soKmDaDi;}
+    double getSoKmThayNhotGanNhat() const {return soKmThayNhotGanNhat;}
     // Setter
     void setCongSuat(double cs){if(cs>=0) congSuat=cs;}
     void setHeTruyenDong(string htd){heTruyenDong=htd;}
     void setSoKmDaDi(double skm){if(skm>=0) soKmDaDi=skm;}
+    void setSoKmThayNhotGanNhat(double skmNhot){if(skmNhot>=0) soKmThayNhotGanNhat=skmNhot;}
     // Lấy loại phương tiện (Đa hình)
     string GetLoaiPhuongTien() const override{return "Xe may";}
     // Lấy thông số riêng của xe máy (Đa hình)
@@ -88,8 +94,7 @@ public:
     }
     // Hàm nhập thông tin xe máy
     void Nhap(istream& in) override {
-        // Gọi hàm nhập của lớp PhuongTien
-        PhuongTien::Nhap(in);
+        PhuongTien::Nhap(in);        // Gọi hàm nhập của lớp PhuongTien
         // Nhập công suất
         setColor(C_VIEN);
         cout<<" "<<char(204)<<char(205)<<"Nhap Cong suat: ";
@@ -119,7 +124,7 @@ public:
     // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const override{
         PhuongTien::HienThiThongTin(out);
-        out<<"Cong suat: "<<congSuat<<endl<<"He truyen dong: "<<heTruyenDong<<endl<<"So km da di: "<<soKmDaDi<<endl;
+        out<<"Cong suat: "<<congSuat<<" cc;"<<endl<<"He truyen dong: "<<heTruyenDong<<";"<<endl<<"So km da di: "<<soKmDaDi<<" km;"<<endl;
     }
     // Quá tải nhập
     friend istream& operator>>(istream& in, XeMay &p){
