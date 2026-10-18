@@ -43,7 +43,7 @@ public:
     // Lấy thông số riêng của xe máy (Đa hình)
     string GetThongSo() const override {
         stringstream ss;
-        ss<<fixed<<setprecision(0)<<congSuat<<" cc - "<<heTruyenDong<<" - "<<fixed<<setprecision(1)<<soKmDaDi<<" km";
+        ss<<fixed<<setprecision(0)<<congSuat<<" - "<<heTruyenDong<<" - "<<fixed<<setprecision(1)<<soKmDaDi<<" km";
         return ss.str();
     }
     // Phí bảo trì riêng cho xe máy (Đa hình)
