@@ -66,41 +66,57 @@ public:
         if (soNam < 0) { soNam = 0; }
         return giaGoc*pow(0.9, soNam);
     }
-    // Nhập thông tin
+    // Hàm nhập thông tin phương tiện, hỗ trợ tính đa hình
     virtual void Nhap(istream& in) {
-        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Bien so: ";
-        setColor(C_TEXT); getline(in, bienSo);
-        
-        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Hang san xuat: ";
-        setColor(C_TEXT); getline(in, hangSanXuat);
-        
-        // --- ĐÃ ĐƯA LOGIC KIỂM TRA NĂM VÀO ĐÂY ---
+        // Nhập biển số phương tiện
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap Bien so: ";
+        setColor(C_TEXT);
+        getline(in, bienSo);
+        // Nhập hãng sản xuất
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap Hang san xuat: ";
+        setColor(C_TEXT);
+        getline(in, hangSanXuat);
+        // Lấy thời gian hiện tại của hệ thống
         time_t now = time(0);
+        // Chuyển thời gian sang múi giờ địa phương
         tm* ltm = localtime(&now);
+        // Xác định năm hiện tại
         int namHienTai = 1900 + ltm->tm_year;
-
-        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Nam san xuat: ";
-        setColor(C_TEXT); 
-        // Vòng lặp gom chung bắt lỗi nhập chữ (fail) và lỗi logic (sai khoảng năm)
-        while (!(in >> namSanXuat) || namSanXuat < 1900 || namSanXuat > namHienTai) {
-            in.clear(); // Xóa cờ lỗi
-            in.ignore(32767, '\n'); // Bỏ qua ký tự thừa
+        // Nhập năm sản xuất
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap Nam san xuat: ";
+        setColor(C_TEXT);
+        // Kiểm tra năm sản xuất phải là số hợp lệ
+        // và nằm trong khoảng từ năm 1900 đến năm hiện tại
+        while (!(in >> namSanXuat) ||
+            namSanXuat < 1900 || namSanXuat > namHienTai) {
+            in.clear(); // Xóa trạng thái lỗi của luồng nhập
+            in.ignore(32767, '\n'); // Bỏ qua các ký tự còn lại trên dòng
+            // Thông báo lỗi và yêu cầu nhập lại năm sản xuất
             setColor(C_VIEN);
             cout << "  " << char(204) << char(205) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
             cout << "  " << char(204) << char(205) << " Nhap lai Nam san xuat: ";
             setColor(C_TEXT);
         }
+        // Xóa ký tự xuống dòng còn lại sau khi nhập năm
         in.ignore(32767, '\n');
-
-        setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Gia goc (VND): ";
-        setColor(C_TEXT); 
-        while (!(in >> giaGoc) || giaGoc < 0) { // Sẵn tiện bắt lỗi giá gốc âm
-            in.clear();
-            in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] Gia goc khong hop le!\n";
+        // Nhập giá gốc của phương tiện
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap Gia goc (VND): ";
+        setColor(C_TEXT);
+        // Kiểm tra giá gốc phải là số hợp lệ và không âm
+        while (!(in >> giaGoc) || giaGoc < 0) {
+            in.clear(); // Xóa trạng thái lỗi của luồng nhập
+            in.ignore(32767, '\n'); // Bỏ qua dữ liệu không hợp lệ
+            // Thông báo lỗi và yêu cầu nhập lại giá gốc
+            setColor(C_VIEN);
+            cout << "  " << char(204) << char(205) << " [LOI] Gia goc khong hop le!\n";
             cout << "  " << char(204) << char(205) << " Nhap lai Gia goc (VND): ";
             setColor(C_TEXT);
         }
+        // Xóa ký tự xuống dòng còn lại sau khi nhập giá gốc
         in.ignore(32767, '\n');
     }
     // Hiển thị thông tin
