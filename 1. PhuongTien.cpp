@@ -22,7 +22,7 @@ public:
         giaGoc = 0;
     }
     // Hàm khởi tạo có tham số
-    PhuongTien(string bs, string hsx, int nsx, double gia, int thanghh, int namhh) {
+    PhuongTien(string bs, string hsx, int nsx, double gia) {
         bienSo = bs;
         hangSanXuat = hsx;
         namSanXuat = nsx;
