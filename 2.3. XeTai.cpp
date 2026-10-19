@@ -11,7 +11,7 @@ public:
         loaiThungXe = "";
     }
     // Hàm khởi tạo có tham số
-    XeTai(string bs, string hsx, int nsx, double gia, double tt, int soTruc, string loaiThung) : PhuongTien(bs, hsx, nsx, gia, 0, 0) {
+    XeTai(string bs, string hsx, int nsx, double gia, double tt, int soTruc, string loaiThung) : PhuongTien(bs, hsx, nsx, gia) {
         taiTrong = tt;
         soTrucBanhXe = soTruc;
         loaiThungXe = loaiThung;
