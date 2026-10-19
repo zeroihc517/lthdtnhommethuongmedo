@@ -87,35 +87,23 @@ public:
         return false;
     }
     // Hàm nhập thông tin
-    void Nhap(istream& in) {
-        // Gọi hàm nhập của lớp cơ sở PhuongTien
+    void Nhap(istream& in) override {
+        // Gọi hàm nhập của lớp cơ sở PhuongTien (đã bao gồm kiểm tra năm)
         PhuongTien::Nhap(in);
-        // Kiểm tra năm sản xuất hợp lệ
-        time_t now = time(0);
-        tm* ltm = localtime(&now);
-        int namHienTai = 1900 + ltm->tm_year;
-        while (namSanXuat < 1900 || namSanXuat > namHienTai) {
-            setColor(C_VIEN);
-            cout << "  " << char(204) << char(205) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
-            cout << "  " << char(204) << char(205) << " Nhap lai Nam san xuat: ";
-            setColor(C_TEXT);
-            in >> namSanXuat;
-            if (in.fail()) {
-                in.clear();
-                in.ignore(32767, '\n');
-                continue;
-            }
-            in.ignore(32767, '\n');
-        }
+
         // Nhập số chỗ ngồi
         setColor(C_VIEN);
         cout << "  " << char(204) << char(205) << " Nhap So cho ngoi: ";
         setColor(C_TEXT);
-        in >> soChoNgoi;
-        if (in.fail()) {
+        while (!(in >> soChoNgoi) || soChoNgoi <= 0) {
             in.clear();
+            in.ignore(32767, '\n');
+            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] So cho ngoi khong hop le!\n";
+            cout << "  " << char(204) << char(205) << " Nhap lai So cho ngoi: ";
+            setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
+
         // Nhập kiểu dáng xe
         setColor(C_VIEN);
         cout << "  " << char(204) << char(205) << " Nhap Kieu dang (Sedan, SUV, Hatchback...): ";
