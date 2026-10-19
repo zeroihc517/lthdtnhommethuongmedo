@@ -70,15 +70,37 @@ public:
     virtual void Nhap(istream& in) {
         setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Bien so: ";
         setColor(C_TEXT); getline(in, bienSo);
+        
         setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Hang san xuat: ";
         setColor(C_TEXT); getline(in, hangSanXuat);
+        
+        // --- ĐÃ ĐƯA LOGIC KIỂM TRA NĂM VÀO ĐÂY ---
+        time_t now = time(0);
+        tm* ltm = localtime(&now);
+        int namHienTai = 1900 + ltm->tm_year;
+
         setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Nam san xuat: ";
-        setColor(C_TEXT); in>>namSanXuat;
-        if (in.fail()) { in.clear(); }                                  // Nếu lượng nhập bị lỗi thì xóa có lỗi
+        setColor(C_TEXT); 
+        // Vòng lặp gom chung bắt lỗi nhập chữ (fail) và lỗi logic (sai khoảng năm)
+        while (!(in >> namSanXuat) || namSanXuat < 1900 || namSanXuat > namHienTai) {
+            in.clear(); // Xóa cờ lỗi
+            in.ignore(32767, '\n'); // Bỏ qua ký tự thừa
+            setColor(C_VIEN);
+            cout << "  " << char(204) << char(205) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
+            cout << "  " << char(204) << char(205) << " Nhap lai Nam san xuat: ";
+            setColor(C_TEXT);
+        }
         in.ignore(32767, '\n');
+
         setColor(C_VIEN); cout << "  " << char(204) << char(205) << " Nhap Gia goc (VND): ";
-        setColor(C_TEXT); in >> giaGoc;
-        if (in.fail()) { in.clear(); }                                  // Xử lý có lỗi (nếu có)
+        setColor(C_TEXT); 
+        while (!(in >> giaGoc) || giaGoc < 0) { // Sẵn tiện bắt lỗi giá gốc âm
+            in.clear();
+            in.ignore(32767, '\n');
+            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] Gia goc khong hop le!\n";
+            cout << "  " << char(204) << char(205) << " Nhap lai Gia goc (VND): ";
+            setColor(C_TEXT);
+        }
         in.ignore(32767, '\n');
     }
     // Hiển thị thông tin
