@@ -13,7 +13,7 @@ public:
         soKmThayNhotGanNhat=0;
     }
     // Hàm khởi tạo có tham số
-    XeMay(string bs,string hsx, int nsx, double gia, double cs, string htd, double skm, double skmNhot):PhuongTien(bs, hsx, nsx, gia, 0, 0){
+    XeMay(string bs,string hsx, int nsx, double gia, double cs, string htd, double skm, double skmNhot):PhuongTien(bs, hsx, nsx, gia){
         congSuat=(cs>0)?cs:0;
         heTruyenDong=htd;
         soKmDaDi=(skm>0)?skm:0;
