@@ -160,70 +160,42 @@ public:
         if (gioHienTai >= 16 && gioHienTai < 20) { return false; }
         return true;
     }
-    // Hàm nhập
-void Nhap(istream& in) {
-    // Nhập thông tin của lớp cha
-    PhuongTien::Nhap(in);
+    void Nhap(istream& in) override {
+        // Gọi hàm nhập của lớp cơ sở PhuongTien (đã bao gồm kiểm tra năm)
+        PhuongTien::Nhap(in);
 
-    // Kiểm tra lại năm sản xuất
-    time_t now = time(0);
-    tm* ltm = localtime(&now);
-    int namHienTai = 1900 + ltm->tm_year;
-
-    while (namSanXuat < 1900 || namSanXuat > namHienTai) {
+        // Nhập tải trọng
         setColor(C_VIEN);
-        cout << "  " << char(204) << char(205)
-             << " [LOI] Nam san xuat phai tu 1900 den "
-             << namHienTai << "!\n";
-
-        cout << "  " << char(204) << char(205)
-             << " Nhap lai Nam san xuat: ";
-
+        cout << "  " << char(204) << char(205) << " Nhap Tai trong (tan): ";
         setColor(C_TEXT);
-        in >> namSanXuat;
-
-        if (in.fail()) {
+        while (!(in >> taiTrong) || taiTrong <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            continue;
+            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] Tai trong khong hop le!\n";
+            cout << "  " << char(204) << char(205) << " Nhap lai Tai trong (tan): ";
+            setColor(C_TEXT);
         }
+        in.ignore(32767, '\n');
 
+        // Nhập loại thùng
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap Loai thung xe: ";
+        setColor(C_TEXT);
+        getline(in, loaiThungXe);
+
+        // Nhập số trục
+        setColor(C_VIEN);
+        cout << "  " << char(204) << char(205) << " Nhap So truc banh xe: ";
+        setColor(C_TEXT);
+        while (!(in >> soTrucBanhXe) || soTrucBanhXe <= 0) {
+            in.clear();
+            in.ignore(32767, '\n');
+            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] So truc khong hop le!\n";
+            cout << "  " << char(204) << char(205) << " Nhap lai So truc banh xe: ";
+            setColor(C_TEXT);
+        }
         in.ignore(32767, '\n');
     }
-
-    // Nhập tải trọng
-    setColor(C_VIEN);
-    cout << "  " << char(204) << char(205)
-         << " Nhap Tai trong (tan): ";
-    setColor(C_TEXT);
-    in >> taiTrong;
-
-    if (in.fail()) {
-        in.clear();
-    }
-
-    in.ignore(32767, '\n');
-
-    // Nhập loại thùng
-    setColor(C_VIEN);
-    cout << "  " << char(204) << char(205)
-         << " Nhap Loai thung xe: ";
-    setColor(C_TEXT);
-    getline(in, loaiThungXe);
-
-    // Nhập số trục
-    setColor(C_VIEN);
-    cout << "  " << char(204) << char(205)
-         << " Nhap So truc banh xe: ";
-    setColor(C_TEXT);
-    in >> soTrucBanhXe;
-
-    if (in.fail()) {
-        in.clear();
-    }
-
-    in.ignore(32767, '\n');
-}
     // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         // PhuongTien sẽ tự động gọi hàm GetThongSo()
