@@ -9,7 +9,7 @@ public:
         kieuDang = "";
     }
     // Hàm khởi tạo có tham số
-    XeOto(string bs, string hsx, int nsx, double gia, int soCho, string kd) : PhuongTien(bs, hsx, nsx, gia, 0, 0) {
+    XeOto(string bs, string hsx, int nsx, double gia, int soCho, string kd) : PhuongTien(bs, hsx, nsx, gia) {
         soChoNgoi = soCho;
         kieuDang = kd;
     }
