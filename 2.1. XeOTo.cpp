@@ -90,7 +90,7 @@ public:
     void Nhap(istream& in) {
         // Gọi hàm nhập của lớp cơ sở PhuongTien
         PhuongTien::Nhap(in);
-        // Kiểm tra năm sản xuất hợp lệ (dùng lại logic chuẩn của bạn)
+        // Kiểm tra năm sản xuất hợp lệ
         time_t now = time(0);
         tm* ltm = localtime(&now);
         int namHienTai = 1900 + ltm->tm_year;
