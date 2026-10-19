@@ -48,7 +48,7 @@ public:
         }
         return phiCoBan;
     }
-    // SÁNG TẠO 1: Phân loại phân khúc xe dựa trên số chỗ và kiểu dáng để tư vấn khách hàng
+    // Phân loại phân khúc xe dựa trên số chỗ và kiểu dáng để tư vấn khách hàng
     string PhanLoaiPhanKhuc() const {
         string kd = toLower(kieuDang);
         if (soChoNgoi <= 5 && (kd.find("sedan") != string::npos || kd.find("hatchback") != string::npos)) {
@@ -62,7 +62,7 @@ public:
         }
         return "Oto du lịch thong thuong";
     }
-    // SÁNG TẠO 2: Tính lượng nhiên liệu tiêu thụ và tiền xăng cho chuyến đi (đơn vị: VND)
+    // Tính lượng nhiên liệu tiêu thụ và tiền xăng cho chuyến đi (đơn vị: VND)
     double TinhTienXangChuyenDi(double quangDuong, double giaXangCho1Lit = 22000) const {
         if (quangDuong < 0) return 0;
         double litTieuThuMoi100Km = 8.0; // Mặc định xe 4-5 chỗ tiêu thụ ~8L/100km
@@ -75,7 +75,7 @@ public:
         double tongSoLit = (quangDuong / 100.0) * litTieuThuMoi100Km;
         return tongSoLit * giaXangCho1Lit;
     }
-    // SÁNG TẠO 3: Kiểm tra thời hạn đăng kiểm xe (theo quy định tại VN dựa trên tuổi xe và số chỗ)
+    // Kiểm tra thời hạn đăng kiểm xe (theo quy định tại VN dựa trên tuổi xe và số chỗ)
     // Trả về số năm còn lại hoặc cảnh báo cần đi đăng kiểm
     bool KiemTraCanDangKiem(int namHienTai) const {
         int tuoiXe = namHienTai - getNamSanXuat();
@@ -86,7 +86,7 @@ public:
         }
         return false;
     }
-    // Hàm Nhập thông tin
+    // Hàm nhập thông tin
     void Nhap(istream& in) {
         // Gọi hàm nhập của lớp cơ sở PhuongTien
         PhuongTien::Nhap(in);
@@ -122,17 +122,17 @@ public:
         setColor(C_TEXT);
         getline(in, kieuDang);
     }
-    // Hàm Hiển thị thông tin
+    // Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         // Tự động kế thừa hiển thị chuẩn của PhuongTien và gọi đa hình GetThongSo()
         PhuongTien::HienThiThongTin(out);
     }
-    // Toán tử nhập
+    // Hàm quá tải nhập
     friend istream& operator>>(istream& in, XeOto& p) {
         p.Nhap(in);
         return in;
     }
-    // Toán tử xuất
+    // Hàm quá tải xuất
     friend ostream& operator<<(ostream& out, const XeOto& p) {
         p.HienThiThongTin(out);
         return out;
