@@ -1,4 +1,4 @@
-class XeMay:public PhuongTien{
+class XeMay : public PhuongTien {
 private:
     double congSuat;              // Công suất 
     string heTruyenDong;          // Xe số, xe ga, xe côn tay
