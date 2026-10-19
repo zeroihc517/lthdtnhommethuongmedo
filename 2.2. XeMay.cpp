@@ -132,7 +132,7 @@ public:
         in.ignore(32767,'\n');
     }
     // Hàm hiển thị thông tin
-    void HienThiThongTin(ostream& out) const override{
+    void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
     // Quá tải nhập
