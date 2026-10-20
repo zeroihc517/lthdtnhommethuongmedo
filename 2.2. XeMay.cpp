@@ -117,7 +117,7 @@ public:
         }
         in.ignore(32767,'\n');
         // Nhập số km thay nhớt gần nhất
-        setColor(C_VIEN); cout << " " << char(254) << " Nhap so km da thay nhot gan nhat: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap so km da thay nhot gan nhat: ";
         setColor(C_TEXT);
         in >> soKmThayNhotGanNhat;
         if (in.fail()||soKmThayNhotGanNhat<0) {
