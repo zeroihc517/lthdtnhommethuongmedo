@@ -128,30 +128,28 @@ public:
         PhuongTien::Nhap(in);
         // Nhập tải trọng
         setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap Tai trong (tan): ";
+        cout << "  " << char(254) << " Nhap Tai trong (tan): ";
         setColor(C_TEXT);
         while (!(in >> taiTrong) || taiTrong <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] Tai trong khong hop le!\n";
-            cout << "  " << char(204) << char(205) << " Nhap lai Tai trong (tan): ";
+            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] Tai trong khong hop le!\n";
+            cout << "  " << char(254) << " Nhap lai Tai trong (tan): ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
         // Nhập loại thùng
-        setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap Loai thung xe: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap Loai thung xe: ";
         setColor(C_TEXT);
         getline(in, loaiThungXe);
         // Nhập số trục
-        setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap So truc banh xe: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap So truc banh xe: ";
         setColor(C_TEXT);
         while (!(in >> soTrucBanhXe) || soTrucBanhXe <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] So truc khong hop le!\n";
-            cout << "  " << char(204) << char(205) << " Nhap lai So truc banh xe: ";
+            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] So truc khong hop le!\n";
+            cout << "  " << char(254) << " Nhap lai So truc banh xe: ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
