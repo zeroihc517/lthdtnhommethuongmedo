@@ -95,9 +95,8 @@ public:
             in.clear(); // Xóa trạng thái lỗi của luồng nhập
             in.ignore(32767, '\n'); // Bỏ qua các ký tự còn lại trên dòng
             // Thông báo lỗi và yêu cầu nhập lại năm sản xuất
-            setColor(C_VIEN);
-            cout << "  " << char(254) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
-            cout << "  " << char(254) << " Nhap lai Nam san xuat: ";
+            setColor(C_LOI); cout << "  " << char(254) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
+            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai Nam san xuat: ";
             setColor(C_TEXT);
         }
         // Xóa ký tự xuống dòng còn lại sau khi nhập năm
@@ -111,9 +110,8 @@ public:
             in.clear(); // Xóa trạng thái lỗi của luồng nhập
             in.ignore(32767, '\n'); // Bỏ qua dữ liệu không hợp lệ
             // Thông báo lỗi và yêu cầu nhập lại giá gốc
-            setColor(C_VIEN);
-            cout << "  " << char(254) << " [LOI] Gia goc khong hop le!\n";
-            cout << "  " << char(254) << " Nhap lai Gia goc (VND): ";
+            setColor(C_LOI); cout << "  " << char(254) << " [LOI] Gia goc khong hop le!\n";
+            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai Gia goc (VND): ";
             setColor(C_TEXT);
         }
         // Xóa ký tự xuống dòng còn lại sau khi nhập giá gốc
