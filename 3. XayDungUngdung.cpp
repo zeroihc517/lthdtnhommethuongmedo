@@ -58,3 +58,17 @@ void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     cout << left << setw(46) << text;                                   // Căn trái nội dung trong vùng rộng 46 ký tự, nội dung ngắn hơn sẽ được bổ sung khoảng trắng bên phải.
     setColor(C_VIEN); cout << " " << char(186) << "\n";                 // Chuyển về màu viền, in cạnh phải và kết thúc dòng.
 }
+
+// Hàm định dạng tiền tệ (Thêm dấu chấm vào hàng nghìn) - Tương thích mọi trình biên dịch
+string DinhDangTien(double tien) {
+    long long giaTri = (long long)tien;
+    stringstream ss;
+    ss << giaTri;
+    string s = ss.str(); // Đổi từ số sang chuỗi an toàn
+    int n = s.length();
+    // Chèn dấu chấm cứ mỗi 3 chữ số từ dưới lên
+    for (int i = n - 3; i > 0; i -= 3) {
+        s.insert(i, ".");
+    }
+    return s;
+}
