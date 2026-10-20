@@ -98,8 +98,8 @@ public:
         while (!(in >> soChoNgoi) || soChoNgoi <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] So cho ngoi khong hop le!\n";
-            cout << "  " << char(254) << " Nhap lai So cho ngoi: ";
+            setColor(C_LOI);  cout << "  " << char(254) << " [LOI] So cho ngoi khong hop le!\n";
+            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai So cho ngoi: ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
