@@ -67,7 +67,8 @@ public:
         if (quangDuong <= 0) return 0;
         int tuoiXe = namHienTai - getNamSanXuat();
         if (tuoiXe < 0) {
-            cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+            setColor(C_LOI); cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+            setColor(C_TEXT);
             return 0;
         }
         // Đơn giá cơ bản: 5000 VND/km (chi phí lăn bánh gốc)
@@ -105,7 +106,8 @@ public:
     bool KiemTraXeCoNenThayThe(int namHienTai) const {
         int tuoiXe = namHienTai - getNamSanXuat();
         if (tuoiXe < 0) {
-            cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+            setColor(C_LOI); cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
+            setColor(C_TEXT);
             return false;
         }
         double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
@@ -133,8 +135,8 @@ public:
         while (!(in >> taiTrong) || taiTrong <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] Tai trong khong hop le!\n";
-            cout << "  " << char(254) << " Nhap lai Tai trong (tan): ";
+            setColor(C_LOI);  cout << "  " << char(254) << " [LOI] Tai trong khong hop le!\n";
+            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai Tai trong (tan): ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
@@ -148,8 +150,8 @@ public:
         while (!(in >> soTrucBanhXe) || soTrucBanhXe <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] So truc khong hop le!\n";
-            cout << "  " << char(254) << " Nhap lai So truc banh xe: ";
+            setColor(C_LOI);  cout << "  " << char(254) << " [LOI] So truc khong hop le!\n";
+            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai So truc banh xe: ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
