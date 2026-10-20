@@ -95,8 +95,7 @@ public:
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);        // Gọi hàm nhập của lớp PhuongTien
         // Nhập công suất
-        setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap cong suat: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap cong suat: ";
         setColor(C_TEXT);
         in >> congSuat;
         if (in.fail() || congSuat < 0) {
@@ -105,13 +104,11 @@ public:
         }
         in.ignore(32767,'\n');
         // Nhập hệ truyền động
-        setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap he truyen dong: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap he truyen dong: ";
         setColor(C_TEXT);
         getline(in,heTruyenDong);
         // Nhập số km đã đi
-        setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap so km da di: ";
+        setColor(C_VIEN); cout << "  " << char(254) << " Nhap so km da di: ";
         setColor(C_TEXT);
         in >> soKmDaDi;
         if (in.fail() || soKmDaDi<0) {
@@ -120,8 +117,7 @@ public:
         }
         in.ignore(32767,'\n');
         // Nhập số km thay nhớt gần nhất
-        setColor(C_VIEN);
-        cout << " " << char(204) << char(205) << " Nhap so km da thay nhot gan nhat: ";
+        setColor(C_VIEN); cout << " " << char(254) << " Nhap so km da thay nhot gan nhat: ";
         setColor(C_TEXT);
         in >> soKmThayNhotGanNhat;
         if (in.fail()||soKmThayNhotGanNhat<0) {
