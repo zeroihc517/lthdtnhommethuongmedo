@@ -93,20 +93,20 @@ public:
 
         // Nhập số chỗ ngồi
         setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap So cho ngoi: ";
+        cout << "  " << char(254) << " Nhap So cho ngoi: ";
         setColor(C_TEXT);
         while (!(in >> soChoNgoi) || soChoNgoi <= 0) {
             in.clear();
             in.ignore(32767, '\n');
-            setColor(C_VIEN); cout << "  " << char(204) << char(205) << " [LOI] So cho ngoi khong hop le!\n";
-            cout << "  " << char(204) << char(205) << " Nhap lai So cho ngoi: ";
+            setColor(C_VIEN); cout << "  " << char(254) << " [LOI] So cho ngoi khong hop le!\n";
+            cout << "  " << char(254) << " Nhap lai So cho ngoi: ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
 
         // Nhập kiểu dáng xe
         setColor(C_VIEN);
-        cout << "  " << char(204) << char(205) << " Nhap Kieu dang (Sedan, SUV, Hatchback...): ";
+        cout << "  " << char(254) << " Nhap Kieu dang (Sedan, SUV, Hatchback...): ";
         setColor(C_TEXT);
         getline(in, kieuDang);
     }
