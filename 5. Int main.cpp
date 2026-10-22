@@ -7,7 +7,7 @@ int main() {
         setColor(C_VIEN);
         cout << "\n  " << char(201) << string(M_W_FRAME, char(205)) << char(187) << "\n";
         inTieuDeMenu("QUAN LY PHUONG TIEN GIAO THONG", C_TIEU_DE);
-        inTieuDeMenu("MTMT - Toan Ung Dung va Phan Vi Du", C_VIEN);
+        inTieuDeMenu("MTMD - Toan Ung Dung va Phan Vi Du", C_VIEN);
         setColor(C_VIEN); cout << "  " << char(204) << string(M_W_FRAME, char(205)) << char(185) << "\n";
         inDongMenu("1", "Them phuong tien (Oto, Xe may, Xe tai)", C_TIEU_DE);
         inDongMenu("2", "Hien thi danh sach phuong tien", C_TIEU_DE);
