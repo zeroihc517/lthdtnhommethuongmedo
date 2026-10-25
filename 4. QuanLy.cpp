@@ -78,23 +78,23 @@ public:
                 cout << "  Gia tri hien tai (nam 2026): " << DinhDangTien(ds[i]->TinhGiaTriHienTai(2026)) << " VND\n";
                 // Sử dụng dynamic_cast để gọi các hàm riêng của từng lớp con (thể hiện tính chuyên sâu)
                 if (XeOto* oto = dynamic_cast<XeOto*>(ds[i])) {
-                    cout << "  Phan khúc: " << oto->PhanLoaiPhanKhuc() << "\n";
+                    cout << "  Phan khuc: " << oto->PhanLoaiPhanKhuc() << "\n";
                     cout << "  Can dang kiem: " << (oto->KiemTraCanDangKiem(2026) ? "Can di dang kiem gap!" : "Con han dang kiem.") << "\n";
                 }
                 else if (XeMay* xemay = dynamic_cast<XeMay*>(ds[i])) {
-                    cout << "  Yêu cầu bằng lái: " << xemay->YeuCauBangLai() << "\n";
-                    cout << "  Tình trạng nhớt: ";
+                    cout << "  Yeu cau bang lai: " << xemay->YeuCauBangLai() << "\n";
+                    cout << "  Tinh trang nhot: ";
                     xemay->KiemTraThayNhot();
                 }
                 else if (XeTai* xetai = dynamic_cast<XeTai*>(ds[i])) {
-                    cout << "  Phân loại thùng: " << xetai->PhanLoaiThungXe() << "\n";
-                    cout << "  Cần xem xét thay thế xe: " << (xetai->KiemTraXeCoNenThayThe(2026) ? "Nen dau tu xe moi!" : "Xe van con tot.") << "\n";
+                    cout << "  Phan loai thung: " << xetai->PhanLoaiThungXe() << "\n";
+                    cout << "  Can xem xet thay the xe: " << (xetai->KiemTraXeCoNenThayThe(2026) ? "Nen dau tu xe moi!" : "Xe van con tot.") << "\n";
                 }
                 break;
             }
         }
         if (!found) {
-            inHieuUng("\n  [LOI] Khong tìm thay bien so xe phu hop trong hệ thống!\n", C_LOI);
+            inHieuUng("\n  [LOI] Khong tìm thay bien so xe phu hop trong he thong!\n", C_LOI);
         }
     }
 };
