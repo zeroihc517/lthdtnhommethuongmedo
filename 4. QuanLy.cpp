@@ -9,13 +9,13 @@ public:
         }
         ds.clear();
     }
-    // Thêm phương tiện nhận con trỏ (dùng cho cả nhập bàn phím lẫn nạp dữ liệu mẫu case 5)
+    // Thêm phương tiện nhận con trỏ 
     void ThemPhuongTien(PhuongTien* pt) {
         if (pt != NULL) {
             ds.push_back(pt);
         }
     }
-    // In khung tiêu đề bảng (khớp với lệnh gọi trong case 1 của main)
+    // In khung tiêu đề bảng 
     void InTieuDeBang() const {
         setColor(C_VIEN);
         cout << "  " << char(201) << string(W_FRAME, char(205)) << char(187) << "\n";
@@ -29,7 +29,7 @@ public:
         setColor(C_VIEN); cout << char(186) << "\n";
         cout << "  " << char(204) << string(W_FRAME, char(205)) << char(185) << "\n";
     }
-    // Hiển thị toàn bộ danh sách (khớp case 2)
+    // Hiển thị toàn bộ danh sách 
     void HienThiDanhSach() const {
         system("cls");
         if (ds.empty()) {
