@@ -70,7 +70,7 @@ public:
         getline(cin, bs);
         bool found = false;
         for (size_t i = 0; i < ds.size(); i++) {
-            if (PhuongTien::toLower(ds[i]->getBienSo()) == PhuongTien::toLower(bs)) {
+            if (toLower(ds[i]->getBienSo()) == toLower(bs)) {
                 found = true;
                 cout << "\n  --- THONG TIN CHI TIET --- \n";
                 cout << "  Loai xe: " << ds[i]->GetLoaiPhuongTien() << "\n";
