@@ -81,3 +81,10 @@ string toLower(string str) {
     }
     return str;                                      
 }
+void inDongChiTiet(string thuocTinh, string giaTri, int wLeft = 28, int wRight = 45) {
+    setColor(C_VIEN); cout << "  " << char(186) << " ";
+    setColor(C_TIEU_DE); cout << left << setw(wLeft) << thuocTinh;
+    setColor(C_VIEN); cout << " " << char(186) << " ";
+    setColor(C_TEXT); cout << left << setw(wRight) << giaTri;
+    setColor(C_VIEN); cout << " " << char(186) << "\n";
+}
