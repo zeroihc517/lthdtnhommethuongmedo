@@ -49,14 +49,56 @@ public:
     // Tính tổng phí bảo trì
     void TinhTongPhiBaoTri() const {
         system("cls");
+        int innerW = 50; 
+        int frameW = 52; 
+         setColor(C_VIEN);
+        cout << "\n  " << char(201) << string(frameW, char(205)) << char(187) << "\n";
         inTieuDeMenu("THONG KE TONG PHI BAO TRI", C_TIEU_DE);
-        double tongPhi = 0;
+        setColor(C_VIEN);
+       cout << "  " << char(204) << string(frameW, char(205)) << char(185) << "\n";
+    cout << "  " << char(186) << " ";
+    setColor(C_CHON);
+    cout << left << setw(14) << "Bien so" << setw(14) << "Loai xe" << right << setw(22) << "Thanh tien (VND)";
+    setColor(C_VIEN); 
+    cout << " " << char(186);
+    cout <<"\n  "<<char(204) << string(frameW, char(205)) << char(185) << "\n";
+      double tongPhi = 0;
         for (size_t i = 0; i < ds.size(); i++) {
-            tongPhi += ds[i]->TinhPhiBaoTri(); // Tính đa hình
+            tongPhi += ds[i]->TinhPhiBaoTri(); // Tính da hình
+            cout << "  " << char(186) << " ";
+      setColor(C_TEXT);
+      cout << left << setw(14) << ds[i]->getBienSo() << setw(14) << ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
+
+    setColor(C_VIEN);
+
+    cout << " " << char(186) << "\n";
         }
-        cout << "\n  + Tong so luong phuong tien: " << ds.size() << "\n";
-        cout << "  + Tong phi bao tri phai thu: " << DinhDangTien(tongPhi) << " VND\n";
+        setColor(C_VIEN);
+        cout <<"  "<<char(204) << string(frameW, char(205)) << char(185) << "\n";
+        cout << "  " << char(186);
+        setColor(C_TEXT);
+    cout << left << setw(28)
+  << " + Tong so luong phuong tien: " 
+    << right << setw(21) << ds.size()<<" ";
+
+    setColor(C_VIEN);
+    cout << char(186) << "\n";
+
+    // Tong phi bao tri
+      cout << "  " << char(186) << " ";
+
+    setColor(C_TEXT);
+    string tongTien = DinhDangTien(tongPhi) + " VND";
+    cout << left 
+    << setw(28) << "+ Tong phi bao tri phai thu:"
+       << right << setw(22) << tongTien;
+      setColor(C_VIEN);
+      cout << " " << char(186) << "\n";
+  cout << "  " << char(200) << string(frameW, char(205)) << char(188) << "\n";
+
+    setColor(C_TEXT);
     }
+ 
     // Kiểm tra tính năng mở rộng / tư vấn xe 
     void KiemTraTinhNangMoRong() const {
         system("cls");
