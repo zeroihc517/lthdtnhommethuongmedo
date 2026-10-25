@@ -25,7 +25,7 @@ public:
              << setw(W_NAMSX) << "Nam SX"
              << setw(W_LOAI) << "Loai Xe"
              << setw(W_THONGSO) << "Thong So Rieng"
-             << right << setw(W_PHI) << "Phi Bao Tri" << " ";
+             << right << setw(W_PHI) << "Phi Bao Tri" << "  ";
         setColor(C_VIEN); cout << char(186) << "\n";
         cout << "  " << char(204) << string(W_FRAME, char(205)) << char(185) << "\n";
     }
