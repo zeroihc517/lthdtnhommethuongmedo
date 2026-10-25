@@ -1,10 +1,9 @@
-// ==================== LỚP QUẢN LÝ PHƯƠNG TIỆN ====================
 class QuanLyPhuongTien {
 private:
-    vector<PhuongTien*> ds; // Sử dụng vector chứa con trỏ để tận dụng tính đa hình
+    vector<PhuongTien*> ds;
 
 public:
-    // Hàm hủy: Giải phóng bộ nhớ động để tránh rò rỉ bộ nhớ (Memory leak)
+    // Destructor giải phóng bộ nhớ tránh Memory Leak
     ~QuanLyPhuongTien() {
         for (size_t i = 0; i < ds.size(); i++) {
             delete ds[i];
@@ -12,125 +11,98 @@ public:
         ds.clear();
     }
 
-    // 1. Thêm phương tiện vào danh sách (dùng đa hình)
-    void ThemPhuongTien() {
-        system("cls");
-        setColor(C_VIEN); cout << "  " << char(201) << string(M_W_FRAME - 4, '=') << char(187) << "\n";
-        inTieuDeMenu("THEM PHUONG TIEN", C_TIEU_DE);
-        setColor(C_VIEN); cout << "  " << char(204) << string(M_W_FRAME - 4, '-') << char(185) << "\n";
-        
-        inDongMenu("1", "Them Xe O To", C_CHON);
-        inDongMenu("2", "Them Xe May", C_CHON);
-        inDongMenu("3", "Them Xe Tai", C_CHON);
-        inDongMenu("0", "Quay lai menu chinh", C_LOI);
-        
-        setColor(C_VIEN); cout << "  " << char(200) << string(M_W_FRAME - 4, '=') << char(188) << "\n";
-        
-        setColor(C_VIEN); cout << " Nhap lua chon cua ban: ";
-        setColor(C_TEXT);
-        int chon;
-        if (!(cin >> chon)) {
-            cin.clear();
-            cin.ignore(32767, '\n');
-            return;
+    // Thêm phương tiện nhận con trỏ (dùng cho cả nhập bàn phím lẫn nạp dữ liệu mẫu case 5)
+    void ThemPhuongTien(PhuongTien* pt) {
+        if (pt != NULL) {
+            ds.push_back(pt);
         }
-        cin.ignore(32767, '\n');
-
-        PhuongTien* p = nullptr;
-        if (chon == 1) {
-            p = new XeOto();
-        } else if (chon == 2) {
-            p = new XeMay();
-        } else if (chon == 3) {
-            p = new XeTai();
-        } else {
-            return;
-        }
-
-        cout << "\n";
-        cin >> *p; // Gọi toán tử nhập (đa hình qua hàm Nhap)
-        ds.push_back(p);
-
-        setColor(C_CHON);
-        cout << "\n  " << char(254) << " Them phuong tien thanh cong!\n";
-        setColor(C_TEXT);
-        system("pause");
     }
 
-    // 2. Hiển thị danh sách phương tiện dạng bảng
-    void HienThiDanhSach() const {
-        system("cls");
-        if (ds.empty()) {
-            setColor(C_LOI);
-            cout << "Danh sach hien tai dang trong!\n";
-            setColor(C_TEXT);
-            system("pause");
-            return;
-        }
-
+    // In khung tiêu đề bảng (khớp với lệnh gọi trong case 1 của main)
+    void InTieuDeBang() const {
         setColor(C_VIEN);
-        cout << left
+        cout << "  " << char(201) << string(W_FRAME, char(205)) << char(187) << "\n";
+        cout << "  " << char(186) << left
              << setw(W_BIENSO) << "Bien So"
              << setw(W_HANG) << "Hang SX"
              << setw(W_NAMSX) << "Nam SX"
              << setw(W_LOAI) << "Loai Xe"
              << setw(W_THONGSO) << "Thong So Rieng"
-             << right << setw(W_PHI) << "Phi Bao Tri" << "\n";
-        cout << string(W_BIENSO + W_HANG + W_NAMSX + W_LOAI + W_THONGSO + W_PHI, '-') << "\n";
-        
-        setColor(C_TEXT);
-        for (size_t i = 0; i < ds.size(); i++) {
-            // Tận dụng tính đa hình: gọi operator<< -> HienThiThongTin -> GetThongSo, GetLoaiPhuongTien tương ứng
-            cout << *ds[i] << "\n";
-        }
-        setColor(C_VIEN);
-        cout << string(W_BIENSO + W_HANG + W_NAMSX + W_LOAI + W_THONGSO + W_PHI, '-') << "\n";
-        setColor(C_TEXT);
-        system("pause");
+             << right << setw(W_PHI) << "Phi Bao Tri" << " ";
+        setColor(C_VIEN); cout << char(186) << "\n";
+        cout << "  " << char(204) << string(W_FRAME, char(205)) << char(185) << "\n";
     }
 
-    // 3. Tìm kiếm phương tiện theo biển số
-    void TimKiemTheoBienSo() const {
+    // Hiển thị toàn bộ danh sách (khớp case 2)
+    void HienThiDanhSach() const {
         system("cls");
-        setColor(C_TIEU_DE);
-        cout << "--- TIM KIEM PHUONG TIEN THEO BIEN SO ---\n";
-        setColor(C_VIEN);
-        cout << "Nhap bien so can tim: ";
-        setColor(C_TEXT);
-        string tuKhoa;
-        getline(cin, tuKhoa);
-
-        bool timThay = false;
-        cout << "\nKet qua tim kiem:\n";
+        if (ds.empty()) {
+            inHieuUng("\n  [THONG BAO] Danh sach phuong tien dang trong!\n", C_LOI);
+            return;
+        }
+        InTieuDeBang();
         for (size_t i = 0; i < ds.size(); i++) {
-            // Chuyển về chữ thường để tìm kiếm không phân biệt hoa thường
-            if (PhuongTien::toLower(ds[i]->getBienSo()).find(PhuongTien::toLower(tuKhoa)) != string::npos) {
-                cout << *ds[i] << "\n";
-                timThay = true;
-            }
+            setColor(C_VIEN); cout << "  " << char(186) << " ";
+            setColor(C_TEXT); cout << *ds[i];
+            setColor(C_VIEN); cout << " " << char(186) << "\n";
         }
-
-        if (!timThay) {
-            setColor(C_LOI);
-            cout << "Khong tim thay phuong tien nao phu hop!\n";
-            setColor(C_TEXT);
-        }
-        system("pause");
+        setColor(C_VIEN);
+        cout << "  " << char(200) << string(W_FRAME, char(205)) << char(188) << "\n";
+        setColor(C_TEXT);
     }
 
-    // 4. Thống kê tổng phí bảo trì toàn bộ danh sách
-    void ThongKePhiBaoTri() const {
+    // Tính tổng phí bảo trì (khớp case 3)
+    void TinhTongPhiBaoTri() const {
         system("cls");
-        setColor(C_TIEU_DE);
-        cout << "--- THONG KE TONG PHI BAO TRI ---\n";
-        setColor(C_TEXT);
+        inTieuDeMenu("THONG KE TONG PHI BAO TRI", C_TIEU_DE);
         double tongPhi = 0;
         for (size_t i = 0; i < ds.size(); i++) {
-            tongPhi += ds[i]->TinhPhiBaoTri(); // Đa hình tính phí bảo trì riêng của từng loại xe
+            tongPhi += ds[i]->TinhPhiBaoTri(); // Tính đa hình
         }
-        cout << "Tong so luong phuong tien: " << ds.size() << "\n";
-        cout << "Tong phi bao tri phai thu: " << DinhDangTien(tongPhi) << " VND\n";
-        system("pause");
+        cout << "\n  + Tong so luong phuong tien: " << ds.size() << "\n";
+        cout << "  + Tong phi bao tri phai thu: " << DinhDangTien(tongPhi) << " VND\n";
+    }
+
+    // Kiểm tra tính năng mở rộng / tư vấn xe (khớp case 4)
+    void KiemTraTinhNangMoRong() const {
+        system("cls");
+        inTieuDeMenu("TRA CUU CHI TIET & TU VAN XE", C_TIEU_DE);
+        if (ds.empty()) {
+            inHieuUng("\n  [THONG BAO] Danh sach trong, chua co xe de tra cuu!\n", C_LOI);
+            return;
+        }
+        cout << "\n  Nhap bien so xe can tra cuu tinh nang rieng: ";
+        string bs;
+        getline(cin, bs);
+
+        bool found = false;
+        for (size_t i = 0; i < ds.size(); i++) {
+            if (PhuongTien::toLower(ds[i]->getBienSo()) == PhuongTien::toLower(bs)) {
+                found = true;
+                cout << "\n  --- THONG TIN CHI TIET --- \n";
+                cout << "  Loai xe: " << ds[i]->GetLoaiPhuongTien() << "\n";
+                cout << "  Bien so: " << ds[i]->getBienSo() << "\n";
+                cout << "  Gia tri hien tai (nam 2026): " << DinhDangTien(ds[i]->TinhGiaTriHienTai(2026)) << " VND\n";
+
+                // Sử dụng dynamic_cast để gọi các hàm riêng của từng lớp con (thể hiện tính chuyên sâu)
+                if (XeOto* oto = dynamic_cast<XeOto*>(ds[i])) {
+                    cout << "  Phan khúc: " << oto->PhanLoaiPhanKhuc() << "\n";
+                    cout << "  Can dang kiem: " << (oto->KiemTraCanDangKiem(2026) ? "Can di dang kiem gap!" : "Con han dang kiem.") << "\n";
+                }
+                else if (XeMay* xemay = dynamic_cast<XeMay*>(ds[i])) {
+                    cout << "  Yêu cầu bằng lái: " << xemay->YeuCauBangLai() << "\n";
+                    cout << "  Tình trạng nhớt: ";
+                    xemay->KiemTraThayNhot();
+                }
+                else if (XeTai* xetai = dynamic_cast<XeTai*>(ds[i])) {
+                    cout << "  Phân loại thùng: " << xetai->PhanLoaiThungXe() << "\n";
+                    cout << "  Cần xem xét thay thế xe: " << (xetai->KiemTraXeCoNenThayThe(2026) ? "Nen dau tu xe moi!" : "Xe van con tot.") << "\n";
+                }
+                break;
+            }
+        }
+        if (!found) {
+            inHieuUng("\n  [LOI] Khong tìm thay bien so xe phu hop trong hệ thống!\n", C_LOI);
+        }
     }
 };
-
