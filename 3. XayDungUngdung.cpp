@@ -59,25 +59,33 @@ void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     setColor(C_VIEN); cout << " " << char(186) << "\n";                 // Chuyển về màu viền, in cạnh phải và kết thúc dòng.
 }
 
-// Hàm định dạng tiền tệ (Thêm dấu chấm vào hàng nghìn) - Tương thích mọi trình biên dịch
+// Hàm định dạng tiền tệ bằng cách thêm dấu chấm vào hàng nghìn
 string DinhDangTien(double tien) {
+    // Chuyển số tiền từ kiểu double sang long long, bỏ phần thập phân
     long long giaTri = (long long)tien;
+    // Tạo đối tượng stringstream để chuyển số thành chuỗi
     stringstream ss;
     ss << giaTri;
-    string s = ss.str(); // Đổi từ số sang chuỗi an toàn
+    // Lấy chuỗi biểu diễn số tiền
+    string s = ss.str();
+    // Lấy độ dài của chuỗi
     int n = s.length();
-    // Chèn dấu chấm cứ mỗi 3 chữ số từ dưới lên
+    // Chèn dấu chấm vào giữa các nhóm 3 chữ số, tính từ phải sang trái
     for (int i = n - 3; i > 0; i -= 3) {
         s.insert(i, ".");
     }
-    return s;
+    return s;        // Trả về chuỗi tiền tệ đã được định dạng
 }
 
-string toLower(string str) {                    
-    for (int i = 0; i < str.length(); i++) {        
-        if (str[i] >= 'A' && str[i] <= 'Z') {         
-            str[i] = str[i] + 32;                     
+string toLower(string str) {
+    // Duyệt qua từng ký tự trong chuỗi
+    for (int i = 0; i < str.length(); i++) {
+        // Kiểm tra ký tự có phải chữ in hoa từ 'A' đến 'Z' không
+        if (str[i] >= 'A' && str[i] <= 'Z') {
+            // Chuyển chữ in hoa thành chữ thường bằng cách cộng 32
+            str[i] = str[i] + 32;
         }
     }
-    return str;                                      
+    // Trả về chuỗi sau khi đã chuyển thành chữ thường
+    return str;
 }
