@@ -46,7 +46,7 @@ public:
         cout << "  " << char(200) << string(W_FRAME, char(205)) << char(188) << "\n";
         setColor(C_TEXT);
     }
-    // Tính tổng phí bảo trì (khớp case 3)
+    // Tính tổng phí bảo trì
     void TinhTongPhiBaoTri() const {
         system("cls");
         inTieuDeMenu("THONG KE TONG PHI BAO TRI", C_TIEU_DE);
@@ -57,7 +57,7 @@ public:
         cout << "\n  + Tong so luong phuong tien: " << ds.size() << "\n";
         cout << "  + Tong phi bao tri phai thu: " << DinhDangTien(tongPhi) << " VND\n";
     }
-    // Kiểm tra tính năng mở rộng / tư vấn xe (khớp case 4)
+    // Kiểm tra tính năng mở rộng / tư vấn xe 
     void KiemTraTinhNangMoRong() const {
         system("cls");
         inTieuDeMenu("TRA CUU CHI TIET & TU VAN XE", C_TIEU_DE);
