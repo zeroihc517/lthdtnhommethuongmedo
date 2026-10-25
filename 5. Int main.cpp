@@ -106,19 +106,16 @@ int main() {
                 break; // Kết thúc case 1 của menu chính
             }
             case 2: 
-                system("cls");
-                // Gọi hàm hiển thị toàn bộ danh sách
-                ql.HienThiDanhSach(); 
+                system("cls");            // Xóa màn hình trước khi in menu mới
+                ql.HienThiDanhSach();     // Gọi hàm hiển thị toàn bộ danh sách
                 break;
             case 3: 
-                system("cls");
-                // Gọi hàm tính và in tổng phí bảo trì
-                ql.TinhTongPhiBaoTri(); 
+                system("cls");                // Xóa màn hình trước khi in menu mới
+                ql.TinhTongPhiBaoTri();      // Gọi hàm tính và in tổng phí bảo trì
                 break;
             case 4: 
-                system("cls");
-                // Gọi hàm kiểm tra các tính năng riêng biệt (mở rộng của từng lớp con)
-                ql.TuVanXe(); 
+                system("cls");            // Xóa màn hình trước khi in menu mới
+                ql.TuVanXe();             // Gọi hàm kiểm tra các tính năng riêng biệt (mở rộng của từng lớp con)
                 break;
             case 5: {
                 // Thêm dữ liệu mẫu cứng (hardcode) để tiện việc test chức năng không phải nhập tay nhiều lần
