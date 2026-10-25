@@ -1,7 +1,6 @@
 class QuanLyPhuongTien {
 private:
     vector<PhuongTien*> ds;
-
 public:
     // Destructor giải phóng bộ nhớ tránh Memory Leak
     ~QuanLyPhuongTien() {
@@ -10,14 +9,12 @@ public:
         }
         ds.clear();
     }
-
     // Thêm phương tiện nhận con trỏ (dùng cho cả nhập bàn phím lẫn nạp dữ liệu mẫu case 5)
     void ThemPhuongTien(PhuongTien* pt) {
         if (pt != NULL) {
             ds.push_back(pt);
         }
     }
-
     // In khung tiêu đề bảng (khớp với lệnh gọi trong case 1 của main)
     void InTieuDeBang() const {
         setColor(C_VIEN);
@@ -32,7 +29,6 @@ public:
         setColor(C_VIEN); cout << char(186) << "\n";
         cout << "  " << char(204) << string(W_FRAME, char(205)) << char(185) << "\n";
     }
-
     // Hiển thị toàn bộ danh sách (khớp case 2)
     void HienThiDanhSach() const {
         system("cls");
@@ -50,7 +46,6 @@ public:
         cout << "  " << char(200) << string(W_FRAME, char(205)) << char(188) << "\n";
         setColor(C_TEXT);
     }
-
     // Tính tổng phí bảo trì (khớp case 3)
     void TinhTongPhiBaoTri() const {
         system("cls");
@@ -62,7 +57,6 @@ public:
         cout << "\n  + Tong so luong phuong tien: " << ds.size() << "\n";
         cout << "  + Tong phi bao tri phai thu: " << DinhDangTien(tongPhi) << " VND\n";
     }
-
     // Kiểm tra tính năng mở rộng / tư vấn xe (khớp case 4)
     void KiemTraTinhNangMoRong() const {
         system("cls");
@@ -74,7 +68,6 @@ public:
         cout << "\n  Nhap bien so xe can tra cuu tinh nang rieng: ";
         string bs;
         getline(cin, bs);
-
         bool found = false;
         for (size_t i = 0; i < ds.size(); i++) {
             if (PhuongTien::toLower(ds[i]->getBienSo()) == PhuongTien::toLower(bs)) {
@@ -83,7 +76,6 @@ public:
                 cout << "  Loai xe: " << ds[i]->GetLoaiPhuongTien() << "\n";
                 cout << "  Bien so: " << ds[i]->getBienSo() << "\n";
                 cout << "  Gia tri hien tai (nam 2026): " << DinhDangTien(ds[i]->TinhGiaTriHienTai(2026)) << " VND\n";
-
                 // Sử dụng dynamic_cast để gọi các hàm riêng của từng lớp con (thể hiện tính chuyên sâu)
                 if (XeOto* oto = dynamic_cast<XeOto*>(ds[i])) {
                     cout << "  Phan khúc: " << oto->PhanLoaiPhanKhuc() << "\n";
