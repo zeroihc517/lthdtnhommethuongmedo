@@ -115,7 +115,7 @@ int main() {
                 break;
             case 4: 
                 // Gọi hàm kiểm tra các tính năng riêng biệt (mở rộng của từng lớp con)
-                ql.KiemTraTinhNangMoRong(); 
+                ql.TuVanXe(); 
                 break;
             case 5: {
                 // Thêm dữ liệu mẫu cứng (hardcode) để tiện việc test chức năng không phải nhập tay nhiều lần
