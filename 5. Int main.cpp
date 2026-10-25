@@ -106,14 +106,17 @@ int main() {
                 break; // Kết thúc case 1 của menu chính
             }
             case 2: 
+                system("cls");
                 // Gọi hàm hiển thị toàn bộ danh sách
                 ql.HienThiDanhSach(); 
                 break;
             case 3: 
+                system("cls");
                 // Gọi hàm tính và in tổng phí bảo trì
                 ql.TinhTongPhiBaoTri(); 
                 break;
             case 4: 
+                system("cls");
                 // Gọi hàm kiểm tra các tính năng riêng biệt (mở rộng của từng lớp con)
                 ql.TuVanXe(); 
                 break;
