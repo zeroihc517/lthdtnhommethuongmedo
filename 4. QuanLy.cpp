@@ -2,20 +2,20 @@ class QuanLyPhuongTien {
 private:
     vector<PhuongTien*> ds;
 public:
-    // Destructor gi?i phóng b? nh? tránh Memory Leak
+    // Destructor giai phong bo nho tranh Memory Leak
     ~QuanLyPhuongTien() {
         for (size_t i = 0; i < ds.size(); i++) {
             delete ds[i];
         }
         ds.clear();
     }
-    // Thêm phuong ti?n nh?n con tr? 
+    // Them phuong tien nhan con tro 
     void ThemPhuongTien(PhuongTien* pt) {
         if (pt != NULL) {
             ds.push_back(pt);
         }
     }
-    // In khung tiêu d? b?ng 
+    // In khung tieu de bang 
     void InTieuDeBang() const {
         setColor(C_VIEN);
         cout << "  " << char(201) << string(W_FRAME, char(205)) << char(187) << "\n";
@@ -30,7 +30,7 @@ public:
         setColor(C_VIEN); cout << char(186) << "\n";
         cout << "  " << char(204) << string(W_FRAME, char(205)) << char(185) << "\n";
     }
-    // Hi?n th? toàn b? danh sách 
+    // Hien thi toan bo danh sach 
     void HienThiDanhSach() const {
         system("cls");
         int frameW=120;
@@ -50,7 +50,7 @@ public:
         cout << "  " << char(200) << string(W_FRAME, char(205)) << char(188) << "\n";
         setColor(C_TEXT);
     }
-    // Tính t?ng phí b?o trì
+    // Tinh tong phi bao tri
     void TinhTongPhiBaoTri() const {
         int innerW = 50; 
         int frameW = 52; 
