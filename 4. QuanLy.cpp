@@ -67,7 +67,7 @@ public:
 		cout <<"\n  "<<char(204) << string(frameW, char(205)) << char(185) << "\n";
     	double tongPhi = 0;
         for (size_t i = 0; i < ds.size(); i++) {
-            tongPhi += ds[i]->TinhPhiBaoTri(); // Tính da hình
+            tongPhi += ds[i]->TinhPhiBaoTri(); // Tinh da hinh
             cout << "  " << char(186) << " ";
 			setColor(C_TEXT);
 			cout << left << setw(14) << ds[i]->getBienSo() << setw(14) << ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
