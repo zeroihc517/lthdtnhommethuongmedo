@@ -61,7 +61,8 @@ public:
    		cout << "  " << char(204) << string(frameW, char(205)) << char(185) << "\n";
 		cout << "  " << char(186) << " ";
 		setColor(C_CHON);
-		cout << left << setw(14) << "Bien so" << setw(14) << "Loai xe" << right << setw(22) << "Thanh tien (VND)";
+		cout << left << setw(14) << "Bien so" << setw(14) << "Loai xe" << right
+			<< setw(22) << "Thanh tien (VND)";
 		setColor(C_VIEN); 
 		cout << " " << char(186);
 		cout <<"\n  "<<char(204) << string(frameW, char(205)) << char(185) << "\n";
@@ -70,7 +71,8 @@ public:
             tongPhi += ds[i]->TinhPhiBaoTri(); // Tính da hình
             cout << "  " << char(186) << " ";
 			setColor(C_TEXT);
-			cout << left << setw(14) << ds[i]->getBienSo() << setw(14) << ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
+			cout << left << setw(14) << ds[i]->getBienSo() << setw(14) 
+				<< ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
 
     setColor(C_VIEN);
 
