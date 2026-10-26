@@ -55,75 +55,21 @@ public:
     // Đa hình lấy từ hàm GetThongSo() của lớp cha 
     string GetThongSo() const override {
         stringstream ss;
-        ss << taiTrong << " tan" << " - " << loaiThungXe
-           << " - " << soTrucBanhXe << " truc";
+        ss << taiTrong << " tan" << " - " << loaiThungXe << " - " << soTrucBanhXe << " truc";
         return ss.str();
     }
-    // Đa hình lấy từ hàm TinhPhiBaoTri() của lớp cha 
-    double TinhPhiBaoTri() const override {
-        return 1000000 + taiTrong * 200000;
-    }
-    double TinhCuocVanChuyen(double quangDuong, int namHienTai) const {
-        if (quangDuong <= 0) return 0;
-        int tuoiXe = namHienTai - getNamSanXuat();
-        if (tuoiXe < 0) {
-            setColor(C_LOI); cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
-            setColor(C_TEXT);
-            return 0;
-        }
-        // Đơn giá cơ bản: 5000 VND/km (chi phí lăn bánh gốc)
-        double donGiaMoiKm = 5000; 
-        // 1. Gộp phụ phí theo tải trọng (Chi phí vận hành + Cước vận chuyển)
-        if (taiTrong > 5) {
-            donGiaMoiKm += 15000; // 3000 (vận hành) + 12000 (cước)
-        } else if (taiTrong > 2) {
-            donGiaMoiKm += 9500;  // 1500 (vận hành) + 8000 (cước)
-        } else {
-            donGiaMoiKm += 5000;  // 0 (vận hành) + 5000 (cước)
-        }
-        // 2. Phụ phí cấu hình xe (số trục bánh xe)
-        if (soTrucBanhXe >= 4) {
-            donGiaMoiKm += 2000;
-        } else if (soTrucBanhXe == 3) {
-            donGiaMoiKm += 1000;
-        }
-        // 3. Phụ phí rủi ro/hao mòn xe cũ (tuổi xe > 10 năm)
-        if (tuoiXe > 10) donGiaMoiKm += 1000;
-        // 4. Phụ phí xe chuyên dụng (thùng đông lạnh)
-        if (toLower(loaiThungXe) == "dong lanh") donGiaMoiKm += 3000;
-        // Trả về tổng cước dựa trên quãng đường nhân với tổng đơn giá 1 km
-        return quangDuong * donGiaMoiKm;
-    }
-     // HÀM PHÂN LOẠI THÙNG XE, ĐỂ ĐƯA RA CÁC OPTION CHO KHÁCH HÀNG LỰA CHỌN
-    string PhanLoaiThungXe() const {
-        string loai =  toLower(loaiThungXe);
-        if (loai == "dong lanh") { return "Thung dong lanh"; }
-        if (loai == "thung kin") { return "Thung kin"; }
-        if (loai == "thung bat") { return "Thung bat"; }
-        if (loai == "xe ben") { return "Xe ben"; }
-        return "Khong xac dinh";
-    }
-    bool KiemTraXeCoNenThayThe(int namHienTai) const {
-        int tuoiXe = namHienTai - getNamSanXuat();
-        if (tuoiXe < 0) {
-            setColor(C_LOI); cout << "[LOI] Nam san xuat khong the lon hon nam hien tai!\n";
-            setColor(C_TEXT);
-            return false;
-        }
-        double giaTriHienTai = TinhGiaTriHienTai(namHienTai);
-        // Bóc tách tính chi phí vận hành (hao mòn, xăng xe, bảo dưỡng...) 
-        // không bao gồm phí vận chuyển để đánh giá đúng tình trạng xuống cấp của xe
-        double chiPhiVanHanh1Km = 5000; 
-        if (taiTrong > 5) chiPhiVanHanh1Km += 3000;
-        else if (taiTrong > 2) chiPhiVanHanh1Km += 1500;
-        if (soTrucBanhXe >= 4) chiPhiVanHanh1Km += 2000;
-        else if (soTrucBanhXe == 3) chiPhiVanHanh1Km += 1000;
-        if (tuoiXe > 10) chiPhiVanHanh1Km += 1000;
-        // Xe trên 15 năm, giá trị giảm dưới 30% và chi phí vận hành gốc >= 8000đ/km
-        if (tuoiXe > 15 && giaTriHienTai < (getGiaGoc() * 0.3) && chiPhiVanHanh1Km >= 8000) {
-            return true;
-        }
-        return false;
+    // Đa hình: Tính tổng chi phí (Bao gồm phí bảo trì + Tiền dầu)
+    double TinhPhiBaoTri(double quangDuong = 0) const override {
+        double phiCoBan = 1000000 + taiTrong * 200000;
+        if (quangDuong <= 0) return phiCoBan;
+        double litTieuThuMoi100Km = 12.0; 
+        if (taiTrong > 5) litTieuThuMoi100Km += 10.0;
+        else if (taiTrong > 2) litTieuThuMoi100Km += 5.0;
+        if (soTrucBanhXe >= 4) litTieuThuMoi100Km += 4.0;
+        string loai = toLower(loaiThungXe);
+        if (loai.find("dong lanh") != string::npos) litTieuThuMoi100Km += 3.0;
+        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000; // Giá dầu 20000
+        return phiCoBan + tienNienLieu;
     }
     void Nhap(istream& in) override {
         // Gọi hàm nhập của lớp cơ sở PhuongTien (đã bao gồm kiểm tra năm)
