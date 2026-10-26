@@ -83,7 +83,7 @@ public:
     << right << setw(21) << ds.size()<<" ";
     setColor(C_VIEN);
     cout << char(186) << "\n";
-    // Tong phi bao tri
+	// Tong phi bao tri
 	    cout << "  " << char(186) << " ";    
 		setColor(C_TEXT);
 		string tongTien = DinhDangTien(tongPhi) + " VND";
