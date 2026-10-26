@@ -26,7 +26,6 @@ using namespace std;
 void setColor(int color) {
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
-
 void inHieuUng(string text, int color, int delay = 5) {
     setColor(color);       
     for (int i = 0; i < text.length(); i++) {      
@@ -34,7 +33,6 @@ void inHieuUng(string text, int color, int delay = 5) {
         Sleep(delay);        
     }
 }
-
 void inTieuDeMenu(string title, int color) {
     setColor(C_VIEN); cout << "  " << char(186) << " ";
     setColor(color);
@@ -43,7 +41,6 @@ void inTieuDeMenu(string title, int color) {
     cout << string(padLeft, ' ') << title << string(padRight, ' ');   
     setColor(C_VIEN); cout << " " << char(186) << "\n";          
 }
-
 void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     setColor(C_VIEN); cout << "  " << char(186) << " "; 
     setColor(sttColor); 
@@ -53,7 +50,6 @@ void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     cout << left << setw(46) << text;  
     setColor(C_VIEN); cout << " " << char(186) << "\n";     
 }
-
 string DinhDangTien(double tien) {
     long long giaTri = (long long)tien;
     stringstream ss;
@@ -65,7 +61,6 @@ string DinhDangTien(double tien) {
     }
     return s;
 }
-
 string toLower(string str) {
     for (int i = 0; i < str.length(); i++) {
         if (str[i] >= 'A' && str[i] <= 'Z') {
@@ -149,7 +144,6 @@ public:
         }
         in.ignore(32767, '\n');
     }
-    // Hiển thị thông tin
     virtual void HienThiThongTin(ostream& out) const {
         out << left
             << setw(W_BIENSO) << bienSo
@@ -572,9 +566,7 @@ int main() {
             cin.clear();
             cin.ignore(32767, '\n');
             luaChon = -1;
-        } else {
-            cin.ignore(32767, '\n');
-        }
+        } else { cin.ignore(32767, '\n'); }
         switch (luaChon) {
             case 1: {
                 int loaiXe;
@@ -625,7 +617,6 @@ int main() {
                         cin >> *pt; 
                         ql.ThemPhuongTien(pt);
                         inHieuUng("\n  => Da them phuong tien thanh cong!\n", C_CHON);
-                        // Vẽ bảng và hiển thị lại thông tin phương tiện vừa được thêm vào
                         ql.InTieuDeBang();
                         setColor(C_VIEN); cout << "  " << char(186) << " ";
                         setColor(C_TEXT); cout << *pt; 
@@ -633,7 +624,6 @@ int main() {
                         cout << "  " << char(200) << string(W_FRAME, char(205)) << char(188) << "\n";
                         setColor(C_TEXT);
                     }
-                    // Dừng màn hình để người dùng đọc kết quả trước khi vòng lặp lặp lại
                     setColor(C_VIEN); cout << "\n  ";
                     system("pause");
                 } while (true);
