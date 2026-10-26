@@ -337,14 +337,14 @@ public:
         if (soTrucBanhXe >= 4) litTieuThuMoi100Km += 4.0;
         string loai = toLower(loaiThungXe);
         if (loai.find("dong lanh") != string::npos) litTieuThuMoi100Km += 3.0;
-        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000; // Giá dầu 20000
+        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000;
         return phiCoBan + tienNienLieu;
     }
     void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
     friend istream& operator>>(istream& in, XeTai& p) {
-        in >> static_cast<PhuongTien&>(p); // Gọi toán tử nhập của lớp cha
+        in >> static_cast<PhuongTien&>(p);
         setColor(C_VIEN); cout << "  " << char(254) << " Nhap Tai trong (tan): ";
         setColor(C_TEXT);
         while (!(in >> p.taiTrong) || p.taiTrong <= 0) {
