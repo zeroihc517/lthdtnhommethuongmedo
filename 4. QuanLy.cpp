@@ -70,8 +70,7 @@ public:
             tongPhi += ds[i]->TinhPhiBaoTri(); // Tính da hình
             cout << "  " << char(186) << " ";
 			setColor(C_TEXT);
-			cout << left << setw(14) << ds[i]->getBienSo() << setw(14) 
-				<< ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
+			cout << left << setw(14) << ds[i]->getBienSo() << setw(14) << ds[i]->GetLoaiPhuongTien() << right << setw(22) << DinhDangTien(ds[i]->TinhPhiBaoTri());
     setColor(C_VIEN);
     cout << " " << char(186) << "\n";
         }
