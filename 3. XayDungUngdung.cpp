@@ -9,7 +9,7 @@
 #define W_LOAI     10   // Độ rộng cột loại phương tiện
 #define W_THONGSO  33   // Độ rộng cột thông số kỹ thuật
 #define W_PHI      18   // Độ rộng cột phí
-#define W_FRAME    98   // Chiều rộng tổng thể của khung giao diện, đơn vị tính là số ký tự hiển thị trên một dòng Console
+#define W_FRAME    80   // Chiều rộng tổng thể của khung giao diện, đơn vị tính là số ký tự hiển thị trên một dòng Console
 #define M_W_IN     50   // Chiều rộng vùng nội dung bên trong menu
 #define M_W_FRAME  52   // Chiều rộng khung menu
 
@@ -20,16 +20,14 @@ void setColor(int color) {
     // Nhờ đó, các ký tự được in ra sau lời gọi hàm sẽ sử dụng màu đã thiết lập cho đến khi thuộc tính màu được thay đổi bằng một lời gọi khác.
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
 }
-
 // Hàm in văn bản theo hiệu ứng từng ký tự
 void inHieuUng(string text, int color, int delay = 5) {
     setColor(color);                                        // Thiết lập màu sắc cho toàn bộ văn bản sẽ được in.
-    for (size_t i = 0; i < text.length(); i++) {            // Duyệt lần lượt từng ký tự trong chuỗi text, size_t là kiểu số nguyên không âm thường dùng để biểu diễn kích thước.
+    for (int i = 0; i < text.length(); i++) {            // Duyệt lần lượt từng ký tự trong chuỗi text, int là kiểu số nguyên không âm thường dùng để biểu diễn kích thước.
         cout << text[i];                                    // In ký tự tại vị trí i mà không tự động xuống dòng.
         Sleep(delay);                                       // Tạm dừng chương trình trong delay mili giây, tạo hiệu ứng văn bản xuất hiện lần lượt từng ký tự.
     }
 }
-
 // Hàm in tiêu đề menu căn giữa
 void inTieuDeMenu(string title, int color) {
     setColor(C_VIEN); cout << "  " << char(186) << " ";     // In phần viền bên trái của dòng menu.
@@ -44,7 +42,6 @@ void inTieuDeMenu(string title, int color) {
     cout << string(padLeft, ' ') << title << string(padRight, ' ');     // In khoảng trắng bên trái, nội dung tiêu đề và khoảng trắng bên phải, tiêu đề được căn giữa trong vùng nội dung.
     setColor(C_VIEN); cout << " " << char(186) << "\n";                 // Chuyển về màu viền để in cạnh phải của dòng menu.
 }
-
 // Hàm in một dòng lựa chọn trong menu
 void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     setColor(C_VIEN); cout << "  " << char(186) << " ";                 // In viền trái của dòng menu bằng màu viền.
@@ -58,7 +55,6 @@ void inDongMenu(string stt, string text, int sttColor = C_TIEU_DE) {
     cout << left << setw(46) << text;                                   // Căn trái nội dung trong vùng rộng 46 ký tự, nội dung ngắn hơn sẽ được bổ sung khoảng trắng bên phải.
     setColor(C_VIEN); cout << " " << char(186) << "\n";                 // Chuyển về màu viền, in cạnh phải và kết thúc dòng.
 }
-
 // Hàm định dạng tiền tệ bằng cách thêm dấu chấm vào hàng nghìn
 string DinhDangTien(double tien) {
     // Chuyển số tiền từ kiểu double sang long long, bỏ phần thập phân
@@ -76,7 +72,6 @@ string DinhDangTien(double tien) {
     }
     return s;        // Trả về chuỗi tiền tệ đã được định dạng
 }
-
 string toLower(string str) {
     // Duyệt qua từng ký tự trong chuỗi
     for (int i = 0; i < str.length(); i++) {
