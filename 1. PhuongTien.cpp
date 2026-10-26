@@ -37,15 +37,6 @@ public:
     }
     // Hàm hủy
     virtual ~PhuongTien() {}
-    // Hàm chuyển toàn bộ ký tự chữ cái in hoa trong chuỗi thành chữ thường
-    static string toLower(string str) {                    
-        for (size_t i = 0; i < str.length(); i++) {        // Duyệt lần lượt từng ký tự trong chuỗi str
-            if (str[i] >= 'A' && str[i] <= 'Z') {         // Kiểm tra ký tự hiện tại có nằm trong khoảng từ 'A' đến 'Z' hay không
-                str[i] = str[i] + 32;                     // Chuyển chữ in hoa thành chữ thường bằng cách cộng thêm 32 vào mã ASCII
-            }
-        }
-        return str;                                      // Trả về chuỗi sau khi đã chuyển các chữ cái in hoa thành chữ thường
-    }
     // Hàm get
     string getBienSo() const { return bienSo; }
     string getHangSanXuat() const { return hangSanXuat; }
@@ -59,7 +50,7 @@ public:
     // Phương thức thuần ảo
     virtual string GetLoaiPhuongTien() const=0;     // Trả về loại phương tiện, ví dụ: Xe máy, Ô tô... 
     virtual string GetThongSo() const=0;            // Trả về thông số riêng của phương tiện, ví dụ: Số chỗ ngồi, dung tích xi lanh...
-    virtual double TinhPhiBaoTri() const=0;         // Tính phí bảo trì của phương tiện
+    virtual double TinhPhiBaoTri(double quangDuong = 0) const=0;         // Tính phí bảo trì của phương tiện
     // Tính giá trị hiện tại
     double TinhGiaTriHienTai(int namHienTai=2026) const {
         int soNam = namHienTai - namSanXuat;
@@ -125,9 +116,6 @@ public:
             << setw(W_NAMSX) << namSanXuat                                  // In năm sản xuất
             << setw(W_LOAI) << GetLoaiPhuongTien()                          // Gọi hàm ảo để lấy loại phương tiện
             << setw(W_THONGSO) << GetThongSo();                             // Gọi hàm ảo để lấy thông số riêng
-        stringstream ssPhi;                                                 // Tạo lượng chuỗi để định dạng phí bảo trì
-        ssPhi << DinhDangTien(TinhPhiBaoTri()) << " VND";
-        out << right << setw(W_PHI) << ssPhi.str();                          // Căn lề phải và in phí bảo trì theo độ rộng cột
     }
     // Toán tử nhập
     friend istream& operator >> (istream& in, PhuongTien& p) {
