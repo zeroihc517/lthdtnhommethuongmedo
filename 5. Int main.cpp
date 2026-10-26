@@ -14,10 +14,9 @@ int main() {
         inTieuDeMenu("Nhiem vu he thong Me Thuong Me Do", C_VIEN);
         setColor(C_VIEN); cout << "  " << char(204) << string(M_W_FRAME, char(205)) << char(185) << "\n";
         inDongMenu("1", "Them phuong tien (Oto, Xe may, Xe tai)", C_TIEU_DE);
-        inDongMenu("2", "Hien thi danh sach phuong tien", C_TIEU_DE);
-        inDongMenu("3", "Tinh tong phi bao tri", C_TIEU_DE);
-        inDongMenu("4", "Tra cuu chi tiet & Tu van xe", C_CHON);
-        inDongMenu("5", "Them du lieu mau (Test nhanh)", C_TIEU_DE); 
+        inDongMenu("2", "Hien thi danh sach & Tra cuu chi tiet", C_CHON);
+        inDongMenu("3", "Du toan chi phi (Bao tri + Nhien lieu)", C_TIEU_DE);
+        inDongMenu("4", "Them du lieu mau (Test nhanh)", C_TIEU_DE); 
         inDongMenu("0", "Thoat chuong trinh", C_LOI);
         setColor(C_VIEN); cout << "  " << char(200) << string(M_W_FRAME, char(205)) << char(188) << "\n\n";
         // Nhận lựa chọn từ người dùng
@@ -107,20 +106,16 @@ int main() {
             }
             case 2: 
                 system("cls");            // Xóa màn hình trước khi in menu mới
-                ql.HienThiDanhSach();     // Gọi hàm hiển thị toàn bộ danh sách
+                ql.HienThiVaTraCuu();     // Gọi hàm hiển thị toàn bộ danh sách
                 break;
             case 3: 
                 system("cls");                // Xóa màn hình trước khi in menu mới
                 ql.TinhTongPhiBaoTri();      // Gọi hàm tính và in tổng phí bảo trì
                 break;
-            case 4: 
-                system("cls");            // Xóa màn hình trước khi in menu mới
-                ql.TuVanXe();             // Gọi hàm kiểm tra các tính năng riêng biệt (mở rộng của từng lớp con)
-                break;
-            case 5: {
+            case 4: {
                 // Thêm dữ liệu mẫu cứng (hardcode) để tiện việc test chức năng không phải nhập tay nhiều lần
                 ql.ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 800000000, 5, "Sedan"));
-                ql.ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 50000000, 150, "Xe con tay", 12000, 11000));
+                ql.ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 50000000, 150, "Xe con tay"));
                 ql.ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 1200000000, 8.5, 3, "Dong lanh"));
                 inHieuUng("\n  => Da nap du lieu mau (1 Xe Oto, 1 Xe May, 1 Xe Tai) de test nhanh chuc nang!\n", C_CHON);
                 break;
