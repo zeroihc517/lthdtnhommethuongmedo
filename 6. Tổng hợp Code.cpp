@@ -81,37 +81,31 @@ public:
         bienSo = "";
         hangSanXuat = "";
         namSanXuat = 1900;
-        giaGoc = 0;
     }
-    PhuongTien(string bs, string hsx, int nsx, double gia) {
+    PhuongTien(string bs, string hsx, int nsx) {
         bienSo = bs;
         hangSanXuat = hsx;
         namSanXuat = nsx;
-        giaGoc = gia;
     }
     PhuongTien(const PhuongTien& p) {
         bienSo = p.bienSo;
         hangSanXuat = p.hangSanXuat;
         namSanXuat = p.namSanXuat;
-        giaGoc = p.giaGoc;
     }
     virtual ~PhuongTien() {}
     string getBienSo() const { return bienSo; }
     string getHangSanXuat() const { return hangSanXuat; }
     int getNamSanXuat() const { return namSanXuat; }
-    double getGiaGoc() const { return giaGoc; }
     void setBienSo(string bs) { bienSo = bs; }
     void setHangSanXuat(string hsx) { hangSanXuat = hsx; }
     void setNamSanXuat(int nsx) { namSanXuat = nsx; }
-    void setGiaGoc(double gia) { giaGoc = gia; }
     virtual string GetLoaiPhuongTien() const=0;
     virtual string GetThongSo() const=0;
-    virtual double TinhPhiBaoTri(double quangDuong = 0) const=0;
-    double TinhGiaTriHienTai(int namHienTai=2026) const {
-        int soNam = namHienTai - namSanXuat;
-        if (soNam < 0) { soNam = 0; }
-        return giaGoc*pow(0.9, soNam);
+    double TinhPhiBaoTri(double quangDuong, double phiCoBan, double litTieuThu, double donGia) const {
+        if (quangDuong <= 0) return phiCoBan;
+        return phiCoBan + (quangDuong / 100.0) * litTieuThu * donGia;
     }
+    virtual double TinhPhiBaoTri(double quangDuong = 0) const=0;
     virtual void Nhap(istream& in) {
         setColor(C_VIEN); cout << "  " << char(254) << " Nhap Bien so: ";
         setColor(C_TEXT); getline(in, bienSo);
@@ -129,17 +123,6 @@ public:
             in.ignore(32767, '\n');
             setColor(C_LOI); cout << "  " << char(254) << " [LOI] Nam san xuat phai tu 1900 den " << namHienTai << "!\n";
             setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai Nam san xuat: ";
-            setColor(C_TEXT);
-        }
-        in.ignore(32767, '\n');
-        setColor(C_VIEN);
-        cout << "  " << char(254) << " Nhap Gia goc (VND): ";
-        setColor(C_TEXT);
-        while (!(in >> giaGoc) || giaGoc < 0) {
-            in.clear();
-            in.ignore(32767, '\n');
-            setColor(C_LOI); cout << "  " << char(254) << " [LOI] Gia goc khong hop le!\n";
-            setColor(C_VIEN); cout << "  " << char(254) << " Nhap lai Gia goc (VND): ";
             setColor(C_TEXT);
         }
         in.ignore(32767, '\n');
@@ -171,7 +154,7 @@ public:
         soChoNgoi = 4;
         kieuDang = "";
     }
-    XeOto(string bs, string hsx, int nsx, double gia, int soCho, string kd) : PhuongTien(bs, hsx, nsx, gia) {
+    XeOto(string bs, string hsx, int nsx, int soCho, string kd) : PhuongTien(bs, hsx, nsx) {
         soChoNgoi = soCho;
         kieuDang = kd;
     }
@@ -197,13 +180,11 @@ public:
         if (soChoNgoi <= 5) phiCoBan += 500000;
         else if (soChoNgoi <= 9) phiCoBan += 1000000;
         else phiCoBan += 2000000;
-        if (quangDuong <= 0) return phiCoBan;
-        double litTieuThuMoi100Km = 8.0;
+        double litTieuThu = 8.0;
         string kd = toLower(kieuDang);
-        if (soChoNgoi > 7 || kd.find("suv") != string::npos) litTieuThuMoi100Km = 12.0;
-        else if (soChoNgoi > 5) litTieuThuMoi100Km = 10.0;
-        double tienXang = (quangDuong / 100.0) * litTieuThuMoi100Km * 22000;
-        return phiCoBan + tienXang;
+        if (soChoNgoi > 7 || kd.find("suv") != string::npos) litTieuThu = 12.0;
+        else if (soChoNgoi > 5) litTieuThu = 10.0;
+        return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 22000);
     }
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
@@ -245,7 +226,7 @@ public:
         congSuat = 0;
         heTruyenDong = "Xe so";
     }
-    XeMay(string bs,string hsx, int nsx, double gia, double cs, string htd):PhuongTien(bs, hsx, nsx, gia){
+    XeMay(string bs,string hsx, int nsx, double cs, string htd):PhuongTien(bs, hsx, nsx){
         congSuat = (cs>0) ? cs:0;
         heTruyenDong = htd;
     }
@@ -267,20 +248,17 @@ public:
     double TinhPhiBaoTri(double quangDuong = 0) const override {
         double phiCoBan = 150000;
         if (congSuat > 150) phiCoBan += 200000;
-        if (quangDuong <= 0) return phiCoBan;
-        double litTieuThuMoi100Km = 1.8;
-        if (congSuat > 150) litTieuThuMoi100Km = 3.5;
-        else if (congSuat >= 125) litTieuThuMoi100Km = 2.2;
+        double litTieuThu = 1.8;
+        if (congSuat > 150) litTieuThu = 3.5;
+        else if (congSuat >= 125) litTieuThu = 2.2;
         string htd = toLower(heTruyenDong);
         if (htd.find("xe ga") != string::npos || htd.find("tay ga") != string::npos) {
-            litTieuThuMoi100Km += 0.5;
+            litTieuThu += 0.5;
         }
-        double tienXang = (quangDuong / 100.0) * litTieuThuMoi100Km * 22000;
-        return phiCoBan + tienXang;
+        return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 22000);
     }
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
-        // Nhập công suất
         setColor(C_VIEN); cout << "  " << char(254) << " Nhap cong suat: ";
         setColor(C_TEXT);
         in >> congSuat;
@@ -317,7 +295,7 @@ public:
         soTrucBanhXe = 0;
         loaiThungXe = "";
     }
-    XeTai(string bs, string hsx, int nsx, double gia, double tt, int soTruc, string loaiThung) : PhuongTien(bs, hsx, nsx, gia) {
+    XeTai(string bs, string hsx, int nsx, double tt, int soTruc, string loaiThung) : PhuongTien(bs, hsx, nsx) {
         taiTrong = tt;
         soTrucBanhXe = soTruc;
         loaiThungXe = loaiThung;
@@ -344,15 +322,13 @@ public:
     }
     double TinhPhiBaoTri(double quangDuong = 0) const override {
         double phiCoBan = 1000000 + taiTrong * 200000;
-        if (quangDuong <= 0) return phiCoBan;
-        double litTieuThuMoi100Km = 12.0; 
-        if (taiTrong > 5) litTieuThuMoi100Km += 10.0;
-        else if (taiTrong > 2) litTieuThuMoi100Km += 5.0;
-        if (soTrucBanhXe >= 4) litTieuThuMoi100Km += 4.0;
+        double litTieuThu = 12.0; 
+        if (taiTrong > 5) litTieuThu += 10.0;
+        else if (taiTrong > 2) litTieuThu += 5.0;
+        if (soTrucBanhXe >= 4) litTieuThu += 4.0;
         string loai = toLower(loaiThungXe);
-        if (loai.find("dong lanh") != string::npos) litTieuThuMoi100Km += 3.0;
-        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000;
-        return phiCoBan + tienNienLieu;
+        if (loai.find("dong lanh") != string::npos) litTieuThu += 3.0;
+        return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 20000);
     }
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
@@ -426,10 +402,9 @@ public:
         system("cls");
         int frameW = 52; 
         double quangDuong = 0;
-        cout << "\n";
-        setColor(C_VIEN); cout << "  " << char(201) << string(frameW, char(205)) << char(187) << "\n";
-        inTieuDeMenu("DU TOAN CHI PHI (BAO TRI + NHIEN LIEU)", C_TIEU_DE);
-        setColor(C_VIEN); cout << "  " << char(200) << string(frameW, char(205)) << char(188) << "\n\n";
+        setColor(C_TIEU_DE);
+        cout << "\n  *********** DU TOAN CHI PHI (BAO TRI + NHIEN LIEU) **************\n";
+        cout << endl;
         inHieuUng("  >> Nhap so Km du kien di chuyen (Nhap 0 neu chi tinh phi bao tri): ", C_TIEU_DE, 0);
         setColor(C_TEXT);
         cin >> quangDuong;
@@ -508,8 +483,7 @@ public:
                     inBangTuVan("Bien so", ds[i]->getBienSo(), W_LEFT+1, W_RIGHT+1);
                     inBangTuVan("Hang san xuat", ds[i]->getHangSanXuat(), W_LEFT+1, W_RIGHT+1);           
                     stringstream ss; ss << ds[i]->getNamSanXuat();
-                    inBangTuVan("Nam san xuat", ss.str(), W_LEFT+1, W_RIGHT+1);          
-                    inBangTuVan("Gia tri hien tai (nam 2026)", DinhDangTien(ds[i]->TinhGiaTriHienTai(2026)) + " VND", W_LEFT+1, W_RIGHT+1);         
+                    inBangTuVan("Nam san xuat", ss.str(), W_LEFT+1, W_RIGHT+1);                 
                     setColor(C_VIEN);
                     cout << "  " << char(204) << string(W_LEFT + 2, char(205)) << char(206) << string(W_RIGHT + 2, char(205)) << char(185) << "\n";
                     if (XeOto* oto = dynamic_cast<XeOto*>(ds[i])) {
@@ -552,7 +526,7 @@ int main() {
         setColor(C_VIEN);
         cout << "\n  " << char(201) << string(M_W_FRAME, char(205)) << char(187) << "\n";
         inTieuDeMenu("QUAN LY PHUONG TIEN GIAO THONG", C_TIEU_DE);
-        inTieuDeMenu("Nhiem vu he thong Me Thuong Me Do", C_VIEN);
+        inTieuDeMenu("Nhiem vu he thong Me Thuong Me Do TUD", C_VIEN);
         setColor(C_VIEN); cout << "  " << char(204) << string(M_W_FRAME, char(205)) << char(185) << "\n";
         inDongMenu("1", "Them phuong tien (Oto, Xe may, Xe tai)", C_TIEU_DE);
         inDongMenu("2", "Hien thi danh sach & Tra cuu chi tiet", C_CHON);
@@ -569,7 +543,6 @@ int main() {
         } else { 
             cin.ignore(32767, '\n'); 
         }
-    
         switch (luaChon) {
             case 1: {
                 int loaiXe;
@@ -641,9 +614,9 @@ int main() {
                 ql->TinhTongPhiBaoTri();
                 break;
             case 4: {
-                ql->ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 800000000, 5, "Sedan"));
-                ql->ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 50000000, 150, "Xe con tay"));
-                ql->ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 1200000000, 8.5, 3, "Dong lanh"));
+                ql->ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 5, "Sedan"));
+                ql->ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 150, "Xe con tay"));
+                ql->ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 8.5, 3, "Dong lanh"));
                 inHieuUng("\n  => Da nap du lieu mau (1 Xe Oto, 1 Xe May, 1 Xe Tai) de test nhanh chuc nang!\n", C_CHON);
                 break;
             }
