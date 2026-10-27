@@ -351,7 +351,7 @@ public:
         if (soTrucBanhXe >= 4) litTieuThuMoi100Km += 4.0;
         string loai = toLower(loaiThungXe);
         if (loai.find("dong lanh") != string::npos) litTieuThuMoi100Km += 3.0;
-        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000; // Giá dầu 20000
+        double tienNienLieu = (quangDuong / 100.0) * litTieuThuMoi100Km * 20000;
         return phiCoBan + tienNienLieu;
     }
     void Nhap(istream& in) override {
@@ -545,7 +545,7 @@ public:
 
 int main() {
     SetConsoleOutputCP(437); 
-    QuanLyPhuongTien ql;
+    QuanLyPhuongTien* ql = new QuanLyPhuongTien();
     int luaChon;
     do {
         system("cls");
@@ -566,7 +566,10 @@ int main() {
             cin.clear();
             cin.ignore(32767, '\n');
             luaChon = -1;
-        } else { cin.ignore(32767, '\n'); }
+        } else { 
+            cin.ignore(32767, '\n'); 
+        }
+    
         switch (luaChon) {
             case 1: {
                 int loaiXe;
@@ -615,9 +618,9 @@ int main() {
                     }
                     if (pt != NULL) {
                         cin >> *pt; 
-                        ql.ThemPhuongTien(pt);
+                        ql->ThemPhuongTien(pt);
                         inHieuUng("\n  => Da them phuong tien thanh cong!\n", C_CHON);
-                        ql.InTieuDeBang();
+                        ql->InTieuDeBang();
                         setColor(C_VIEN); cout << "  " << char(186) << " ";
                         setColor(C_TEXT); cout << *pt; 
                         setColor(C_VIEN); cout << " " << char(186) << "\n";
@@ -631,16 +634,16 @@ int main() {
             }
             case 2: 
                 system("cls");
-                ql.HienThiVaTraCuu();
+                ql->HienThiVaTraCuu();
                 break;
             case 3: 
                 system("cls");
-                ql.TinhTongPhiBaoTri();
+                ql->TinhTongPhiBaoTri();
                 break;
             case 4: {
-                ql.ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 800000000, 5, "Sedan"));
-                ql.ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 50000000, 150, "Xe con tay"));
-                ql.ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 1200000000, 8.5, 3, "Dong lanh"));
+                ql->ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 800000000, 5, "Sedan"));
+                ql->ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 50000000, 150, "Xe con tay"));
+                ql->ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 1200000000, 8.5, 3, "Dong lanh"));
                 inHieuUng("\n  => Da nap du lieu mau (1 Xe Oto, 1 Xe May, 1 Xe Tai) de test nhanh chuc nang!\n", C_CHON);
                 break;
             }
@@ -659,5 +662,6 @@ int main() {
             system("pause");
         }
     } while (luaChon != 0);
+    delete ql;
     return 0;
 }
