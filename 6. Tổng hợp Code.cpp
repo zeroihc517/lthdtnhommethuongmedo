@@ -75,7 +75,6 @@ protected:
     string bienSo;
     string hangSanXuat;  
     int namSanXuat; 
-    double giaGoc;
 public:
     PhuongTien() {
         bienSo = "";
@@ -531,7 +530,6 @@ int main() {
         inDongMenu("1", "Them phuong tien (Oto, Xe may, Xe tai)", C_TIEU_DE);
         inDongMenu("2", "Hien thi danh sach & Tra cuu chi tiet", C_CHON);
         inDongMenu("3", "Du toan chi phi (Bao tri + Nhien lieu)", C_TIEU_DE);
-        inDongMenu("4", "Them du lieu mau (Test nhanh)", C_TIEU_DE); 
         inDongMenu("0", "Thoat chuong trinh", C_LOI);
         setColor(C_VIEN); cout << "  " << char(200) << string(M_W_FRAME, char(205)) << char(188) << "\n\n";
         inHieuUng("  >> Nhap lua chon cua ban: ", C_TIEU_DE, 0);
@@ -613,13 +611,6 @@ int main() {
                 system("cls");
                 ql->TinhTongPhiBaoTri();
                 break;
-            case 4: {
-                ql->ThemPhuongTien(new XeOto("51F-123.45", "Toyota", 2020, 5, "Sedan"));
-                ql->ThemPhuongTien(new XeMay("59A-999.99", "Honda", 2022, 150, "Xe con tay"));
-                ql->ThemPhuongTien(new XeTai("60C-567.89", "Isuzu", 2018, 8.5, 3, "Dong lanh"));
-                inHieuUng("\n  => Da nap du lieu mau (1 Xe Oto, 1 Xe May, 1 Xe Tai) de test nhanh chuc nang!\n", C_CHON);
-                break;
-            }
             case 0:
                 cout << "\n";
                 inHieuUng("  DANG THOAT CHUONG TRINH", C_LOI, 10);
