@@ -71,7 +71,7 @@ string toLower(string str) {
 }
 
 class PhuongTien {
-protected:
+private:
     string bienSo;
     string hangSanXuat;  
     int namSanXuat; 
@@ -138,7 +138,7 @@ public:
         p.Nhap(in);
         return in;
     }
-    friend ostream& operator << (ostream& out, const PhuongTien& p) {
+    friend ostream& operator << (ostream& out, PhuongTien& p) {
         p.HienThiThongTin(out);
         return out;
     }
@@ -206,11 +206,11 @@ public:
     void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
-    friend istream& operator>>(istream& in, XeOto& p) {
+	friend istream& operator>>(istream& in, XeOto& p) {
         p.Nhap(in);
         return in;
     }
-    friend ostream& operator<<(ostream& out, const XeOto& p) {
+    friend ostream& operator<<(ostream& out, XeOto& p) {
         p.HienThiThongTin(out);
         return out;
     }
@@ -277,7 +277,7 @@ public:
         p.Nhap(in);
         return in;
     }
-    friend ostream& operator<<(ostream& out, const XeMay &p) {
+    friend ostream& operator<<(ostream& out, XeMay &p) {
         p.HienThiThongTin(out);
         return out;
     }
@@ -363,7 +363,7 @@ public:
         p.Nhap(in);
         return in;
     }
-    friend ostream& operator<<(ostream& out, const XeTai& p) {
+    friend ostream& operator<<(ostream& out, XeTai& p) {
         p.HienThiThongTin(out);
         return out;
     }
@@ -434,7 +434,7 @@ public:
  	    cout << "  " << char(200) << string(frameW, char(205)) << char(188) << "\n";
         setColor(C_TEXT);
     }
-    void inBangTuVan(string thuocTinh, string giaTri,int m ,int n) const {
+    void inBangTuVan(string thuocTinh, string giaTri, int m, int n) const {
         setColor(C_VIEN); cout << "  " << char(186) << " ";
         setColor(C_TIEU_DE); cout << left << setw(m) << thuocTinh;
         setColor(C_VIEN); cout << char(186) << " ";
