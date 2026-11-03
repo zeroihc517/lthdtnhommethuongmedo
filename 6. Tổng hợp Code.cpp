@@ -71,40 +71,51 @@ string toLower(string str) {
 }
 
 class PhuongTien {
-private:
+protected:
     string bienSo;
     string hangSanXuat;  
     int namSanXuat; 
 public:
+    // Hàm khởi tạo mặc định
     PhuongTien() {
         bienSo = "";
         hangSanXuat = "";
         namSanXuat = 1900;
     }
+    // Hàm khởi tạo có tham số
     PhuongTien(string bs, string hsx, int nsx) {
         bienSo = bs;
         hangSanXuat = hsx;
         namSanXuat = nsx;
     }
+    // Hàm khởi tạo sao chép
     PhuongTien(const PhuongTien& p) {
         bienSo = p.bienSo;
         hangSanXuat = p.hangSanXuat;
         namSanXuat = p.namSanXuat;
     }
+    // Hàm hủy ảo
     virtual ~PhuongTien() {}
+    // Các hàm getter
     string getBienSo() const { return bienSo; }
     string getHangSanXuat() const { return hangSanXuat; }
     int getNamSanXuat() const { return namSanXuat; }
+    // Các hàm setter
     void setBienSo(string bs) { bienSo = bs; }
     void setHangSanXuat(string hsx) { hangSanXuat = hsx; }
     void setNamSanXuat(int nsx) { namSanXuat = nsx; }
+    // Hàm lấy loại phương tiện
     virtual string GetLoaiPhuongTien() const=0;
+    // Hàm lấy thông số đặc trưng của phương tiện
     virtual string GetThongSo() const=0;
+    // Hàm tính phí bảo trì dựa trên quãng đường, phí cơ bản và nhiên liệu tiêu thụ
     double TinhPhiBaoTri(double quangDuong, double phiCoBan, double litTieuThu, double donGia) const {
         if (quangDuong <= 0) return phiCoBan;
         return phiCoBan + (quangDuong / 100.0) * litTieuThu * donGia;
     }
+    // Hàm tính phí bảo trì theo quãng đường (hàm thuần ảo, được lớp con cài đặt)
     virtual double TinhPhiBaoTri(double quangDuong = 0) const=0;
+    // Hàm nhập
     virtual void Nhap(istream& in) {
         setColor(C_VIEN); cout << "  " << char(254) << " Nhap Bien so: ";
         setColor(C_TEXT); getline(in, bienSo);
@@ -126,6 +137,7 @@ public:
         }
         in.ignore(32767, '\n');
     }
+    // Hàm hiển thị thông tin phương tiện
     virtual void HienThiThongTin(ostream& out) const {
         out << left
             << setw(W_BIENSO) << bienSo
@@ -134,6 +146,7 @@ public:
             << setw(W_LOAI) << GetLoaiPhuongTien()
             << setw(W_THONGSO) << GetThongSo();
     }
+    // Nhập, xuất
     friend istream& operator >> (istream& in, PhuongTien& p) {
         p.Nhap(in);
         return in;
@@ -149,31 +162,40 @@ private:
     int soChoNgoi;
     string kieuDang;
 public:
+// Hàm khởi tạo mặc định
     XeOto() : PhuongTien() {
         soChoNgoi = 4;
         kieuDang = "";
     }
+// Hàm khởi tạo có tham số
     XeOto(string bs, string hsx, int nsx, int soCho, string kd) : PhuongTien(bs, hsx, nsx) {
         soChoNgoi = soCho;
         kieuDang = kd;
     }
+// Hàm khởi tạo sao chép
     XeOto(const XeOto& p) : PhuongTien(p) {
         soChoNgoi = p.soChoNgoi;
         kieuDang = p.kieuDang;
     }
+// Hàm hủy
     ~XeOto() override {}
+// Các hàm getter
     int getSoChoNgoi() const { return soChoNgoi; }
     string getKieuDang() const { return kieuDang; }
+// Các hàm setter
     void setSoChoNgoi(int soCho) { soChoNgoi = soCho; }
     void setKieuDang(string kd) { kieuDang = kd; }
+// Hàm trả về tên loại phương tiện
     string GetLoaiPhuongTien() const override {
         return "Xe oto";
     }
+// Hàm trả về thông số đặc trưng của xe ô tô
     string GetThongSo() const override {
         stringstream ss;
         ss << soChoNgoi << " cho" << " - " << kieuDang;
         return ss.str();
     }
+// Hàm tính phí bảo trì xe ô tô dựa trên số chỗ ngồi, kiểu dáng, mức tiêu thụ nhiên liệu và quãng đường di chuyển.
     double TinhPhiBaoTri(double quangDuong = 0) const override {
         double phiCoBan = 1500000;
         if (soChoNgoi <= 5) phiCoBan += 500000;
@@ -185,6 +207,8 @@ public:
         else if (soChoNgoi > 5) litTieuThu = 10.0;
         return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 22000);
     }
+    
+// Hàm nhập
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
         setColor(C_VIEN);
@@ -203,9 +227,11 @@ public:
         setColor(C_TEXT);
         getline(in, kieuDang);
     }
+// Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
+// Phương thức nhập, xuất
 	friend istream& operator>>(istream& in, XeOto& p) {
         p.Nhap(in);
         return in;
@@ -221,29 +247,38 @@ private:
     double congSuat;
     string heTruyenDong;
 public:
+// Hàm khởi tạo mặc định
     XeMay():PhuongTien(){
         congSuat = 0;
         heTruyenDong = "Xe so";
     }
-    XeMay(string bs,string hsx, int nsx, double cs, string htd):PhuongTien(bs, hsx, nsx){
+// Hàm khởi tạo có tham số
+    XeMay(string bs, string hsx, int nsx, double cs, string htd):PhuongTien(bs, hsx, nsx){
         congSuat = (cs>0) ? cs:0;
         heTruyenDong = htd;
     }
+// Hàm khởi tạo sao chép
     XeMay(const XeMay &p):PhuongTien(p){
         congSuat = p.congSuat;
         heTruyenDong = p.heTruyenDong;
     }
+// Hàm hủy
     ~XeMay() override{}
+// Các hàm getter
     double getCongSuat() const { return congSuat; }
     string getHeTruyenDong() const { return heTruyenDong; }
+// Các hàm setter
     void setCongSuat (double cs) { if(cs >= 0) congSuat = cs; }
     void setHeTruyenDong (string htd) { heTruyenDong = htd; }
+// Hàm trả về tên loại phương tiện, cụ thể là xe máy.
     string GetLoaiPhuongTien() const override { return "Xe may"; }
+// Hàm tổng hợp và trả về thông số kỹ thuật của xe máy, bao gồm công suất và hệ truyền động.
     string GetThongSo() const override {
         stringstream ss;
         ss << fixed << setprecision(0) << congSuat << " - " << heTruyenDong;
         return ss.str();
     }
+// Hàm tính phí bảo trì xe máy dựa trên quãng đường di chuyển, công suất và hệ truyền động.
     double TinhPhiBaoTri(double quangDuong = 0) const override {
         double phiCoBan = 150000;
         if (congSuat > 150) phiCoBan += 200000;
@@ -256,6 +291,7 @@ public:
         }
         return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 22000);
     }
+// Hàm nhập
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
         setColor(C_VIEN); cout << "  " << char(254) << " Nhap cong suat: ";
@@ -270,9 +306,11 @@ public:
         setColor(C_TEXT);
         getline(in,heTruyenDong);
     }
+// Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
+// Các hàm quá tải nhập, xuất
     friend istream& operator>>(istream& in, XeMay &p) {
         p.Nhap(in);
         return in;
@@ -289,36 +327,45 @@ private:
     int soTrucBanhXe;
     string loaiThungXe;
 public:
+// Hàm khởi tạo mặc định
     XeTai() : PhuongTien() {
         taiTrong = 0;
         soTrucBanhXe = 0;
         loaiThungXe = "";
     }
+// Hàm khởi tạo có tham số
     XeTai(string bs, string hsx, int nsx, double tt, int soTruc, string loaiThung) : PhuongTien(bs, hsx, nsx) {
         taiTrong = tt;
         soTrucBanhXe = soTruc;
         loaiThungXe = loaiThung;
     }
+// Hàm khởi tạo sao chép
     XeTai(const XeTai& p) : PhuongTien(p) {
         taiTrong = p.taiTrong;
         soTrucBanhXe = p.soTrucBanhXe;
         loaiThungXe = p.loaiThungXe;
     }
+// Hàm hủy
     ~XeTai() override {}
+// Hàm getter
     double getTaiTrong() const { return taiTrong; }
     int getSoTrucBanhXe() const { return soTrucBanhXe; }
     string getLoaiThungXe() const { return loaiThungXe; }
+// Hàm setter
     void setTaiTrong(double tt) { taiTrong = tt; }
     void setSoTrucBanhXe(int soTruc) { soTrucBanhXe = soTruc; }
     void setLoaiThungXe(string loaiThung) { loaiThungXe = loaiThung; }
+// Hàm trả về tên loại phương tiện
     string GetLoaiPhuongTien() const override {
         return "Xe tai";
     }
+// Hàm trả về chuỗi thông tin đặc trưng của xe tải
     string GetThongSo() const override {
         stringstream ss;
         ss << taiTrong << " tan" << " - " << loaiThungXe << " - " << soTrucBanhXe << " truc";
         return ss.str();
     }
+// Hàm tính phí bảo trì xe tải dựa trên tải trọng, số trục bánh xe, loại thùng xe và quãng đường di chuyển
     double TinhPhiBaoTri(double quangDuong = 0) const override {
         double phiCoBan = 1000000 + taiTrong * 200000;
         double litTieuThu = 12.0; 
@@ -329,6 +376,7 @@ public:
         if (loai.find("dong lanh") != string::npos) litTieuThu += 3.0;
         return PhuongTien::TinhPhiBaoTri(quangDuong, phiCoBan, litTieuThu, 20000);
     }
+// Hàm nhập
     void Nhap(istream& in) override {
         PhuongTien::Nhap(in);
         setColor(C_VIEN);
@@ -356,9 +404,11 @@ public:
         }
         in.ignore(32767, '\n');
     }
+// Hàm hiển thị thông tin
     void HienThiThongTin(ostream& out) const {
         PhuongTien::HienThiThongTin(out);
     }
+// Quá tải toán tử nhập xuất
     friend istream& operator>>(istream& in, XeTai& p) {
         p.Nhap(in);
         return in;
